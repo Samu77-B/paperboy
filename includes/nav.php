@@ -91,6 +91,7 @@
           </div>
         </div>
         
+        <a href="<?= $base_url ?>student-printing/index.php" class="nav-link<?= ($current_page ?? '') === 'student' ? ' active' : '' ?>">Student Printing</a>
         <a href="<?= $base_url ?>contact.php" class="nav-link<?= ($current_page ?? '') === 'contact' ? ' active' : '' ?>">Contact</a>
         <a href="<?= $base_url ?>templates/templates.php" class="nav-link<?= ($current_page ?? '') === 'templates' ? ' active' : '' ?>">Templates</a>
         <a href="<?= $base_url ?>jobs.php" class="nav-link<?= ($current_page ?? '') === 'jobs' ? ' active' : '' ?>">Jobs</a>
@@ -180,6 +181,7 @@
           <a href="<?= $base_url ?>accessories/retrackable-clips.php" class="mobile-submenu-link">Retractable Clips</a>
         </div>
       </div>
+      <a href="<?= $base_url ?>student-printing/index.php" class="mobile-menu-link">Student Printing</a>
       <a href="<?= $base_url ?>contact.php" class="mobile-menu-link">Contact</a>
       <a href="<?= $base_url ?>templates/templates.php" class="mobile-menu-link">Templates</a>
       <a href="<?= $base_url ?>jobs.php" class="mobile-menu-link">Jobs</a>

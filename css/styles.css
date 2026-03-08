@@ -990,6 +990,11 @@ p { margin-bottom: 16px; }
 .btn-dark:hover { background: #333; }
 .btn-gradient { background: var(--gradient); color: var(--white); }
 .btn-gradient:hover { opacity: 0.9; }
+.btn-gold { background: var(--gold); color: var(--dark); }
+.btn-gold:hover { background: #e5a000; color: var(--dark); }
+.btn-outline-light { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.8); }
+.btn-outline-light:hover { background: rgba(255,255,255,0.15); border-color: var(--white); }
+.btn-block { display: block; width: 100%; }
 
 /* --- Contact Page --- */
 .contact-section { padding: 40px 0; }
@@ -1323,4 +1328,332 @@ p { margin-bottom: 16px; }
 @media (hover: none) and (pointer: coarse) {
   .mobile-menu-link, .mobile-submenu-link { min-height: 44px; display: flex; align-items: center; }
   .nav-search-btn, .mobile-toggle { min-width: 44px; min-height: 44px; }
+}
+
+/* ==========================================================================
+   Student Printing Service section (same brand, separate area)
+   ========================================================================== */
+.student-header .nav-logo { display: flex; align-items: center; gap: 12px; }
+.student-nav-label {
+  font-size: 14px; font-weight: 700; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.student-back-link { color: var(--mid-grey) !important; font-size: 14px; }
+
+.student-hero {
+  background: linear-gradient(135deg, #00aeec 0%, #0077a3 50%, #b0159c 100%);
+  padding: 4rem 0 5rem;
+  text-align: center;
+  color: var(--white);
+}
+.student-hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.student-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.student-hero-lead {
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+.student-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.student-hero-cta .btn { min-width: 200px; }
+
+.student-benefits { padding: 4rem 0; }
+.student-benefits h2 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 1.75rem;
+}
+.student-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+.student-benefit-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-grey);
+  text-align: center;
+}
+.student-benefit-icon {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+.student-benefit-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.student-benefit-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--dark-grey);
+}
+
+.student-products { padding: 3rem 0; }
+.student-products h2 { text-align: center; margin-bottom: 0.75rem; }
+.section-lead {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--dark-grey);
+}
+.student-cta-box {
+  text-align: center;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-grey);
+}
+.student-cta-box p { margin-bottom: 1rem; }
+.student-cta-box .btn { min-width: 180px; }
+
+.student-back {
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid var(--border-grey);
+}
+.back-to-main {
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 15px;
+}
+.back-to-main:hover { text-decoration: underline; }
+
+.student-page-banner {
+  background: linear-gradient(135deg, #00aeec 0%, #b0159c 100%);
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--white);
+}
+.student-page-banner h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--white);
+}
+.student-page-banner p { margin: 0; opacity: 0.95; }
+
+.student-join-section { padding: 3rem 0 4rem; }
+.student-join-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (max-width: 767px) {
+  .student-join-grid { grid-template-columns: 1fr; }
+}
+.student-join-form-wrap h2 { margin-bottom: 0.5rem; }
+.student-join-form-wrap p { margin-bottom: 1.5rem; color: var(--dark-grey); }
+.student-join-form label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+.student-join-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-family: inherit;
+}
+.student-join-form input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 174, 236, 0.15);
+}
+.form-note {
+  margin-top: 1rem;
+  font-size: 13px;
+  color: var(--dark-grey);
+}
+.form-error {
+  padding: 10px 14px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+.student-join-form .btn { margin-top: 1.25rem; }
+
+.student-join-benefits h3 { margin-bottom: 1rem; }
+.student-join-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+.student-join-benefits li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.student-join-benefits li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+.membership-card-preview { margin-top: 2rem; }
+.membership-card-mock {
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+.membership-card-header {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1rem;
+}
+.membership-card-body { padding: 0; }
+.membership-card-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.membership-card-number {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.membership-card-discount {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+}
+
+.student-card-section { padding: 3rem 0 4rem; }
+.container-narrow { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+.membership-card-full {
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 1.5rem;
+}
+.membership-card-full-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1.25rem 1.5rem;
+  background: rgba(0,0,0,0.2);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.9);
+}
+.membership-card-logo { height: 28px; width: auto; filter: brightness(0) invert(1); }
+.membership-card-full-body {
+  padding: 1.5rem 1.5rem 1rem;
+}
+.membership-card-full-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+.membership-card-full-number {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.membership-card-full-discount {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+.membership-card-full-footer {
+  padding: 0.75rem 1.5rem;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.card-instructions {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--dark-grey);
+}
+.card-instructions + .btn { display: block; text-align: center; max-width: 240px; margin: 0 auto; }
+
+/* Student CTA on main site homepage */
+.student-cta-section {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, rgba(0, 174, 236, 0.08) 0%, rgba(176, 21, 156, 0.08) 100%);
+  border-top: 1px solid var(--border-grey);
+  border-bottom: 1px solid var(--border-grey);
+}
+.student-cta-card {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-grey);
+}
+.student-cta-content h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  color: var(--dark);
+}
+.student-cta-content p {
+  margin-bottom: 1.25rem;
+  color: var(--dark-grey);
+}
+.student-cta-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+@media (max-width: 767px) {
+  .student-cta-card { padding: 1.75rem 1.25rem; }
+  .student-cta-badge { top: 0.75rem; right: 0.75rem; font-size: 11px; }
 }

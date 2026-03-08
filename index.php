@@ -192,6 +192,20 @@ include 'includes/nav.php';
     </div>
   </section>
 
+  <!-- Student Printing Service -->
+  <section class="student-cta-section">
+    <div class="container">
+      <div class="student-cta-card">
+        <div class="student-cta-content">
+          <h2>Student Printing Service</h2>
+          <p>Join the Student Club for <strong>$5/month</strong> and get <strong>10% off</strong> all student-related printing. Receive an electronic membership card with a unique member number.</p>
+          <a href="student-printing/index.php" class="btn btn-gold">Join the Student Club</a>
+        </div>
+        <div class="student-cta-badge">Save 10%</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Category Cards -->
   <section class="cards-section bg-light">
     <div class="container">
