@@ -84,20 +84,21 @@ include 'includes/nav.php';
   </section>
 
   <!-- Google Reviews -->
-  <section class="reviews-section">
-    <div class="container">
-      <div class="reviews-header">
-        <h2>What Our Customers Say</h2>
-        <div class="rating-summary">
+  <section class="reviews-section" aria-label="Customer testimonials">
+    <div class="container reviews-container">
+      <header class="reviews-header">
+        <p class="reviews-label">Testimonials</p>
+        <h2 class="reviews-title">What Our Customers Say</h2>
+        <div class="rating-summary" aria-label="Average rating">
           <span class="rating-number" id="rating-number">4.8</span>
-          <span class="rating-stars" id="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="rating-stars" id="rating-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="rating-count" id="rating-count">184 reviews</span>
         </div>
-      </div>
+      </header>
       <div id="reviews-carousel" class="reviews-carousel"></div>
       <div class="review-buttons">
-        <a href="https://share.google/BumzdEyPOBPIYIgfg" target="_blank" rel="noopener" class="review-btn primary">Leave a Review</a>
-        <a href="https://maps.app.goo.gl/8pd9NMSEfVPWUBdZ8" target="_blank" rel="noopener" class="review-btn secondary">View All Reviews</a>
+        <a href="https://share.google/BumzdEyPOBPIYIgfg" target="_blank" rel="noopener" class="review-btn review-btn-primary">Leave a Review</a>
+        <a href="https://maps.app.goo.gl/8pd9NMSEfVPWUBdZ8" target="_blank" rel="noopener" class="review-btn review-btn-secondary">View All Reviews</a>
       </div>
     </div>
   </section>
