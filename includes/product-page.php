@@ -26,8 +26,7 @@ include __DIR__ . '/nav.php';
     <div class="container">
       <a href="<?= $base_url . ($category_link ?? '') ?>" class="back-link">/ BACK</a>
 
-      <!-- Ecwid Product Browser -->
-      <?php if (!empty($ecwid_product_id)): ?>
+      <!-- Ecwid Product Browser (always shown; set $ecwid_product_id on the page to open a specific product) -->
       <div id="my-store-64309912"></div>
       <script>
         window.ec = window.ec || {};
@@ -47,9 +46,18 @@ include __DIR__ . '/nav.php';
         window.ec.storefront.product_details_show_product_description = true;
         window.ec.storefront.product_details_show_share_buttons = false;
         window.ec.storefront.product_details_show_subtitle = true;
-        xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","defaultProductId=<?= $ecwid_product_id ?>","id=my-store-64309912");
+        <?php
+        $pbParams = '"categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list"';
+        if (!empty($ecwid_product_id)) {
+          $pbParams .= ",\"defaultProductId=" . $ecwid_product_id . "\"";
+        }
+        if (!empty($ecwid_default_slug)) {
+          $pbParams .= ",\"defaultSlug=" . addslashes($ecwid_default_slug) . "\"";
+        }
+        $pbParams .= ',"id=my-store-64309912"';
+        ?>
+        xProductBrowser(<?= $pbParams ?>);
       </script>
-      <?php endif; ?>
 
       <?php if (!empty($extra_content)): ?>
       <?= $extra_content ?>

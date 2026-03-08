@@ -4,6 +4,6 @@ $page_description = 'Professional business card printing in Kingston, Jamaica. M
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
+$ecwid_product_id = '461968788'; // BC027 - Business Card Design (single-sided); see ecwid-products-copy-paste-codes.md
 include '../includes/product-page.php';
 ?>

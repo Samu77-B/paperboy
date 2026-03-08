@@ -4,6 +4,6 @@ $page_description = 'Complete stationery printing in Kingston, Jamaica. Letterhe
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
+$ecwid_product_id = '461969032'; // OFFICE STATIONERY PACKAGE 001; see ecwid-products-copy-paste-codes.md
 include '../includes/product-page.php';
 ?>
