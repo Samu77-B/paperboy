@@ -4,6 +4,6 @@ $page_description = 'Hanging banner printing for indoor and outdoor promotional 
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '';
+$ecwid_product_id = '435973287';
 include '../includes/product-page.php';
 ?>

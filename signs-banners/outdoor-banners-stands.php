@@ -4,6 +4,6 @@ $page_description = 'Weather-resistant outdoor banner and stand printing for sto
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '';
+$ecwid_product_id = '493514036';
 include '../includes/product-page.php';
 ?>

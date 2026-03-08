@@ -4,6 +4,6 @@ $page_description = 'X banner stand printing for portable, professional display 
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '';
+$ecwid_product_id = '742497387';
 include '../includes/product-page.php';
 ?>

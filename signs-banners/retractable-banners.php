@@ -4,6 +4,6 @@ $page_description = 'Retractable banner printing for trade shows, exhibitions, a
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '';
+$ecwid_product_id = '435960253';
 include '../includes/product-page.php';
 ?>
