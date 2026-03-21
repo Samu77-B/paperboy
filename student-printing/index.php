@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Student Printing Service';
-$page_description = 'Join the Paperboy JA Student Club for 10% off all student printing. Get an electronic membership card, unique member number, and affordable printing for students in Kingston, Jamaica.';
+$page_description = 'Join the Paperboy JA Student Club for 15% off all student printing. Membership is J$500 per term. Get an electronic membership card, unique member number, and affordable printing for students in Kingston, Jamaica.';
 $page_url = 'student-printing/';
 $current_page = 'student-printing';
 $depth = 1;
@@ -16,9 +16,9 @@ include __DIR__ . '/../includes/nav-student.php';
     <div class="container">
       <div class="student-hero-badge">Student Printing Service</div>
       <h1>Print Smarter.<br>Save More.</h1>
-      <p class="student-hero-lead">Join the Paperboy JA Student Club for <strong>10% off</strong> all student-related printing. Get your digital membership card and start saving today.</p>
+      <p class="student-hero-lead">Join the Paperboy JA Student Club for <strong>15% off</strong> all student-related printing. Get your digital membership card and start saving today.</p>
       <div class="student-hero-cta">
-        <a href="join.php" class="btn btn-gold">Join the Club — $5/month</a>
+        <a href="join.php" class="btn btn-gold">Join the Club — J$500/term</a>
         <a href="<?= $base_url ?>contact.php" class="btn btn-outline-light">Contact Us</a>
       </div>
     </div>
@@ -31,9 +31,9 @@ include __DIR__ . '/../includes/nav-student.php';
       <div class="student-benefits-grid">
         <div class="student-benefit-card">
           <div class="student-benefit-icon">
-            <img src="<?= $base_url ?>images/percentage.png" alt="10% discount" width="72" height="72" loading="lazy" decoding="async">
+            <img src="<?= $base_url ?>images/percentage.png" alt="15% discount" width="72" height="72" loading="lazy" decoding="async">
           </div>
-          <h3>10% Discount</h3>
+          <h3>15% Discount</h3>
           <p>Save on all student-related products—assignments, reports, binding, laminating, posters, and more.</p>
         </div>
         <div class="student-benefit-card">
@@ -45,10 +45,10 @@ include __DIR__ . '/../includes/nav-student.php';
         </div>
         <div class="student-benefit-card">
           <div class="student-benefit-icon">
-            <img src="<?= $base_url ?>images/dollars.png" alt="$5 per month" width="72" height="72" loading="lazy" decoding="async">
+            <img src="<?= $base_url ?>images/dollars.png" alt="J$500 per term" width="72" height="72" loading="lazy" decoding="async">
           </div>
-          <h3>Just $5 per Month</h3>
-          <p>One low monthly fee. Cancel anytime. Your discount easily pays for itself when you print regularly.</p>
+          <h3>J$500 per Term</h3>
+          <p>One membership fee per school term (500 Jamaican dollars). Cancel anytime. Your discount easily covers the fee when you print regularly.</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <?php
 // Example membership card view (e.g. after login or with ?id=XXX)
 $page_title = 'Your Membership Card';
-$page_description = 'Paperboy JA Student Club membership card. Show this for your 10% discount on student printing.';
+$page_description = 'Paperboy JA Student Club membership card. Show this for your 15% discount on student printing.';
 $page_url = 'student-printing/membership-card.php';
 $current_page = 'student-card';
 $depth = 1;
@@ -19,7 +19,7 @@ include __DIR__ . '/../includes/nav-student.php';
   <section class="student-page-banner">
     <div class="container">
       <h1>Your Membership Card</h1>
-      <p>Show this card (or your member number) for 10% off student printing</p>
+      <p>Show this card (or your member number) for 15% off student printing</p>
     </div>
   </section>
 
@@ -33,11 +33,11 @@ include __DIR__ . '/../includes/nav-student.php';
         <div class="membership-card-full-body">
           <div class="membership-card-full-name"><?= $member_name ?></div>
           <div class="membership-card-full-number">Member #<?= $member_number ?></div>
-          <div class="membership-card-full-discount">10% discount on all student-related products</div>
+          <div class="membership-card-full-discount">15% discount on all student-related products</div>
         </div>
         <div class="membership-card-full-footer">Valid at Paperboy JA · Kingston, Jamaica</div>
       </div>
-      <p class="card-instructions">Show this page in-store or enter your member number when ordering online to receive your 10% discount.</p>
+      <p class="card-instructions">Show this page in-store or enter your member number when ordering online to receive your 15% discount.</p>
       <a href="index.php" class="btn btn-blue">Back to Student Printing</a>
     </div>
   </section>

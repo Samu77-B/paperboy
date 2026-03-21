@@ -2,7 +2,7 @@
 /**
  * Student Club join form handler.
  * On submit: validate, then redirect to membership card with generated member ID.
- * Payment (e.g. Stripe $5/month) can be integrated later.
+ * Payment (e.g. Stripe J$500 per term) can be integrated later.
  */
 session_start();
 
