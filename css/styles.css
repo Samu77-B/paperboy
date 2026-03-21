@@ -1341,14 +1341,37 @@ p { margin-bottom: 16px; }
 .student-back-link { color: var(--mid-grey) !important; font-size: 14px; }
 
 .student-hero {
-  background: linear-gradient(135deg, #00aeec 0%, #0077a3 50%, #b0159c 100%);
+  position: relative;
+  overflow: hidden;
+  min-height: min(520px, 70vh);
+  display: flex;
+  align-items: center;
   padding: 4rem 0 5rem;
   text-align: center;
   color: var(--white);
+  background-color: #0077a3;
+  background-image: url('../images/studentImage01.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.student-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Dark overlay so headline, lead text, and buttons stay readable on busy photos */
+  background: linear-gradient(to bottom, rgba(15, 18, 24, 0.72) 0%, rgba(15, 18, 24, 0.82) 100%);
+  z-index: 0;
+}
+.student-hero .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 .student-hero-badge {
   display: inline-block;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
   padding: 8px 20px;
   border-radius: 999px;
   font-size: 14px;
@@ -1362,14 +1385,15 @@ p { margin-bottom: 16px; }
   font-weight: 900;
   margin-bottom: 1rem;
   color: var(--white);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.35);
 }
 .student-hero-lead {
   max-width: 560px;
   margin: 0 auto 2rem;
   font-size: 1.15rem;
   line-height: 1.6;
-  opacity: 0.95;
+  opacity: 1;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
 }
 .student-hero-cta {
   display: flex;
@@ -1399,10 +1423,18 @@ p { margin-bottom: 16px; }
   text-align: center;
 }
 .student-benefit-icon {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--blue);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+}
+.student-benefit-icon img {
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
 }
 .student-benefit-card h3 {
   font-size: 1.2rem;
