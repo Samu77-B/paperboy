@@ -18,8 +18,9 @@ include __DIR__ . '/../includes/nav-student.php';
       <h1>Print Smarter.<br>Save More.</h1>
       <p class="student-hero-lead">Join the Paperboy JA Student Club for <strong>15% off</strong> all student-related printing. Get your digital membership card and start saving today.</p>
       <div class="student-hero-cta">
-        <a href="join.php" class="btn btn-gold">Join the Club — J$500/term</a>
-        <a href="<?= $base_url ?>contact.php" class="btn btn-outline-light">Contact Us</a>
+        <a href="print.php" class="btn btn-gold">Order document printing</a>
+        <a href="member-area.php" class="btn btn-outline-light">Student Club · Member area</a>
+        <a href="join.php" class="btn btn-outline-light">Join the Club — J$500/term</a>
       </div>
     </div>
   </section>
@@ -60,8 +61,9 @@ include __DIR__ . '/../includes/nav-student.php';
       <h2>Student Discount Applies To</h2>
       <p class="section-lead">Binding, laminating, BW/colour printing, reports, booklets, flyers, posters, certificates, and other student essentials.</p>
       <div class="student-cta-box">
-        <p><strong>Ready to save?</strong> Join the club and we’ll email your membership card with your unique member number.</p>
-        <a href="join.php" class="btn btn-blue">Join the Club</a>
+        <p><strong>Ready to print?</strong> Build a mixed B&amp;W and colour order with Student Club pricing, or join for your membership card.</p>
+        <a href="print.php" class="btn btn-blue">Order printing</a>
+        <a href="join.php" class="btn btn-dark" style="margin-left:0.5rem">Join the Club</a>
       </div>
     </div>
   </section>

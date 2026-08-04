@@ -199,7 +199,10 @@ include 'includes/nav.php';
         <div class="student-cta-content">
           <h2>Student Printing Service</h2>
           <p>Join the Student Club for <strong>J$500 per term</strong> and get <strong>15% off</strong> all student-related printing. Receive an electronic membership card with a unique member number.</p>
-          <a href="student-printing/index.php" class="btn btn-gold">Join the Student Club</a>
+          <div class="student-cta-buttons">
+            <a href="student-printing/member-area.php" class="btn btn-gold">Student Club · Member area</a>
+            <a href="student-printing/index.php" class="btn btn-blue">Student printing home</a>
+          </div>
         </div>
         <div class="student-cta-badge">Save 15%</div>
       </div>

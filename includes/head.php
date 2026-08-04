@@ -37,7 +37,7 @@ if (isset($depth) && $depth > 0) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="<?= $base_url ?>css/styles.css?v=5">
+  <link rel="stylesheet" href="<?= $base_url ?>css/styles.css?v=7">
   <?php if (!empty($page_css)): ?>
   <style><?= $page_css ?></style>
   <?php endif; ?>

@@ -1,0 +1,4 @@
+# Railway: run PHP’s built-in server on the platform PORT.
+# Fixes "connection dial timeout" when nothing listens on $PORT.
+[deploy]
+startCommand = "php -S 0.0.0.0:$PORT -t ."

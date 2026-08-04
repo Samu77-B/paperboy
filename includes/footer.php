@@ -33,5 +33,10 @@
 
   <script src="<?= $base_url ?>js/nav.js"></script>
   <script src="<?= $base_url ?>js/main.js"></script>
+  <?php if (!empty($page_scripts) && is_array($page_scripts)): ?>
+    <?php foreach ($page_scripts as $script_src): ?>
+  <script src="<?= htmlspecialchars($script_src) ?>"></script>
+    <?php endforeach; ?>
+  <?php endif; ?>
 </body>
 </html>

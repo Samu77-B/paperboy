@@ -15,6 +15,7 @@ include __DIR__ . '/../includes/nav-student.php';
     <div class="container">
       <h1>Join the Student Club</h1>
       <p>J$500 per term · 15% off student printing · Electronic membership card</p>
+      <p class="student-join-member-link"><a href="member-area.php" class="link-dark">Already a member? Open the Student Club member area →</a></p>
     </div>
   </section>
 
