@@ -60,6 +60,27 @@ include __DIR__ . '/includes/nav.php';
           <div class="shop-product-media">
             <img src="<?= htmlspecialchars($product_image) ?>" alt="<?= htmlspecialchars($remote_product['title'] ?? $selected['name']) ?>"<?php if ($product_image_fallback && $product_image_fallback !== $product_image): ?> onerror="this.onerror=null;this.src='<?= htmlspecialchars($product_image_fallback, ENT_QUOTES) ?>'"<?php endif; ?>>
             <p class="shop-product-caption" data-ps-caption></p>
+            <?php $related = paysynk_related_products($remote_product); ?>
+            <?php if ($related): ?>
+            <div class="shop-related">
+              <h2 class="shop-group-title">You may also like</h2>
+              <div class="shop-grid category-grid">
+                <?php foreach ($related as $item): ?>
+                <a class="category-card shop-card" href="<?= htmlspecialchars(paysynk_product_href($item['slug'])) ?>">
+                  <div class="category-card-img-wrap">
+                    <?php if (!empty($item['image'])): ?>
+                    <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" loading="lazy">
+                    <?php endif; ?>
+                  </div>
+                  <div class="category-card-body">
+                    <h4><?= htmlspecialchars($item['title']) ?></h4>
+                    <span class="link-dark">Shop now</span>
+                  </div>
+                </a>
+                <?php endforeach; ?>
+              </div>
+            </div>
+            <?php endif; ?>
           </div>
           <div class="shop-product-buy">
             <h1 class="shop-product-title"><?= htmlspecialchars($remote_product['title'] ?? $selected['name']) ?></h1>

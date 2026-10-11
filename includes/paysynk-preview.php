@@ -152,6 +152,57 @@ function paysynk_product_image($product, $fallback = '') {
   return $fallback;
 }
 
+function paysynk_related_products($product) {
+  $items = [];
+  $seen = [];
+  $rows = $product['relatedFrom'] ?? [];
+  usort($rows, function ($a, $b) {
+    return ((int) ($a['sort'] ?? 0)) <=> ((int) ($b['sort'] ?? 0));
+  });
+  foreach ($rows as $row) {
+    $to = is_array($row['to'] ?? null) ? $row['to'] : $row;
+    $slug = strtolower((string) ($to['slug'] ?? ''));
+    if ($slug === '' || isset($seen[$slug])) {
+      continue;
+    }
+    $seen[$slug] = true;
+    $local = paysynk_product_by_slug($slug);
+    $image = '';
+    if (!empty($to['images'][0]) && is_string($to['images'][0])) {
+      $image = $to['images'][0];
+    } elseif (!empty($local['image'])) {
+      $image = $local['image'];
+    }
+    $items[] = [
+      'slug' => $slug,
+      'title' => $to['title'] ?? ($local['name'] ?? $slug),
+      'image' => $image,
+    ];
+  }
+  if (!$items) {
+    foreach (($product['related'] ?? []) as $rel) {
+      $slug = strtolower((string) ($rel['slug'] ?? ''));
+      if ($slug === '' || isset($seen[$slug])) {
+        continue;
+      }
+      $seen[$slug] = true;
+      $local = paysynk_product_by_slug($slug);
+      $image = '';
+      if (!empty($rel['images'][0]) && is_string($rel['images'][0])) {
+        $image = $rel['images'][0];
+      } elseif (!empty($local['image'])) {
+        $image = $local['image'];
+      }
+      $items[] = [
+        'slug' => $slug,
+        'title' => $rel['title'] ?? ($local['name'] ?? $slug),
+        'image' => $image,
+      ];
+    }
+  }
+  return $items;
+}
+
 function paysynk_starting_price_minor($product) {
   $vars = $product['variations'] ?? [];
   $min = null;
