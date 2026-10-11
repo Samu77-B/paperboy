@@ -19,7 +19,11 @@ include __DIR__ . '/nav.php';
           <div class="category-card-img-wrap"><img src="<?= $base_url . $product['image'] ?>" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy"></div>
           <div class="category-card-body">
             <h4><?= htmlspecialchars($product['name']) ?></h4>
-            <a href="<?= $product['link'] ?>" class="link-dark">Shop now</a>
+            <?php
+              $shop_slug = !empty($product['slug']) ? $product['slug'] : paysynk_page_slug($product['link'] ?? '');
+              $shop_href = $shop_slug ? paysynk_product_href($shop_slug, $base_url) : ($product['link'] ?? '#');
+            ?>
+            <a href="<?= htmlspecialchars($shop_href) ?>" class="link-dark">Shop now</a>
           </div>
         </div>
         <?php endforeach; ?>

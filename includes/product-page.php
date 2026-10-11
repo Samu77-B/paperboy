@@ -1,5 +1,16 @@
 <?php
 $depth = $depth ?? 1;
+if (empty($skip_shop_redirect)) {
+  require_once __DIR__ . '/paysynk.php';
+  if (!isset($paysynk_product)) {
+    $paysynk_product = paysynk_page_slug();
+  }
+  if (!empty($paysynk_product)) {
+    $prefix = $depth > 0 ? str_repeat('../', $depth) : '';
+    header('Location: ' . $prefix . 'products.php?p=' . rawurlencode($paysynk_product), true, 302);
+    exit;
+  }
+}
 include __DIR__ . '/head.php';
 if (!isset($paysynk_product)) {
   $paysynk_product = paysynk_page_slug();

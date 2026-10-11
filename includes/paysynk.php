@@ -57,3 +57,6 @@ function paysynk_page_slug($script_path = null) {
 
   return $overrides[$file] ?? $file;
 }
+
+require_once __DIR__ . '/paysynk-catalog.php';
+

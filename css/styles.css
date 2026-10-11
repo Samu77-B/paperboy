@@ -885,6 +885,32 @@ p { margin-bottom: 16px; }
   margin-top: 12px;
 }
 
+.shop-page .shop-group {
+  margin-bottom: 48px;
+}
+
+.shop-group-title {
+  font-size: 22px;
+  margin: 0 0 20px;
+}
+
+.shop-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.shop-card.is-active {
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+.shop-product-panel {
+  margin-bottom: 48px;
+}
+
+.shop-grid .paysynk-product-slot {
+  margin: 0 0 2rem;
+}
+
 /* --- About / Feature Section --- */
 .feature-section {
   background: var(--dark);
