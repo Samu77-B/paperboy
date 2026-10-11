@@ -135,6 +135,9 @@ function paysynk_extract_json_object($text) {
 }
 
 function paysynk_format_money($minor, $currency = 'gbp') {
+  if (function_exists('paperboy_format_minor')) {
+    return paperboy_format_minor($minor, $currency);
+  }
   $amount = ((int) $minor) / 100;
   $currency = strtolower((string) $currency);
   $symbols = ['gbp' => '£', 'usd' => '$', 'eur' => '€', 'jmd' => 'J$'];

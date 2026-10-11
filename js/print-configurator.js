@@ -8,6 +8,9 @@
   }
 
   function money(amount) {
+    if (window.PaperboyCurrency) {
+      return window.PaperboyCurrency.format(amount, 'jmd');
+    }
     var n = Math.round(Number(amount) * 100) / 100;
     var formatted = n.toLocaleString('en-JM', {
       minimumFractionDigits: n % 1 === 0 ? 0 : 2,
@@ -156,6 +159,10 @@
 
     form.addEventListener('input', updatePreview);
     form.addEventListener('change', updatePreview);
+    document.addEventListener('paperboy:currency', function () {
+      updatePreview();
+      renderOrder();
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();

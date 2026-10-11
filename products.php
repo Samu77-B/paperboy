@@ -66,7 +66,8 @@ include __DIR__ . '/includes/nav.php';
             <?php if (!empty($remote_product['description'])): ?>
             <p class="shop-product-desc"><?= htmlspecialchars($remote_product['description']) ?></p>
             <?php endif; ?>
-            <p class="shop-product-price" data-ps-price><?= htmlspecialchars(paysynk_format_money($start_minor, $currency)) ?></p>
+            <p class="shop-product-price" data-ps-price data-money-minor="<?= (int) $start_minor ?>" data-money-from="<?= htmlspecialchars($currency) ?>"><?= htmlspecialchars(paysynk_format_money($start_minor, $currency)) ?></p>
+            <p class="shop-currency-note" data-store-currency="<?= htmlspecialchars(strtolower((string) $currency)) ?>"<?= paperboy_selected_currency() === strtolower((string) $currency) ? ' hidden' : '' ?>>Converted at the shop rate. Checkout stays in <?= htmlspecialchars(strtoupper((string) $currency)) ?>.</p>
             <form class="shop-config-form" onsubmit="return false;">
               <?php foreach (($remote_product['options'] ?? []) as $option): ?>
               <label class="shop-config-field">

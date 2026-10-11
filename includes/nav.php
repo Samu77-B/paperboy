@@ -47,6 +47,7 @@
       </nav>
 
       <div class="nav-right">
+        <?php paperboy_currency_switcher(); ?>
         <button class="nav-search-btn" id="searchToggle" aria-label="Open search">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

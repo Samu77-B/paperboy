@@ -40,6 +40,10 @@
     paysynk_embed_script();
   }
   ?>
+  <script>
+    window.PaperboyCurrencyConfig = <?= json_encode(paperboy_currency_public_config(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+  </script>
+  <script src="<?= $base_url ?>js/currency.js"></script>
   <script src="<?= $base_url ?>js/nav.js"></script>
   <script src="<?= $base_url ?>js/main.js"></script>
   <?php if (!empty($page_scripts) && is_array($page_scripts)): ?>

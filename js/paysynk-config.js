@@ -31,6 +31,9 @@
   }
 
   function money(minor) {
+    if (window.PaperboyCurrency) {
+      return window.PaperboyCurrency.formatMinor(minor, store.currency || 'gbp');
+    }
     var amount = Math.round(Number(minor) || 0) / 100;
     var currency = String(store.currency || 'gbp').toLowerCase();
     var symbols = { gbp: '£', usd: '$', eur: '€', jmd: 'J$' };
@@ -97,10 +100,14 @@
 
   function paint() {
     var selected = selectedMap();
-    priceEl.textContent = money(priceMinor(selected));
+    var minor = priceMinor(selected);
+    priceEl.textContent = money(minor);
+    priceEl.setAttribute('data-money-minor', String(minor));
+    priceEl.setAttribute('data-money-from', String(store.currency || 'gbp').toLowerCase());
     if (captionEl) captionEl.textContent = caption(selected);
   }
 
   form.addEventListener('change', paint);
+  document.addEventListener('paperboy:currency', paint);
   paint();
 })();

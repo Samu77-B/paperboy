@@ -25,3 +25,7 @@ error_log
 *.tmp
 *.temp
 .cache/
+
+# Owner-set shop data
+data/currencies.php
+data/admin.php

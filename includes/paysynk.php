@@ -60,4 +60,5 @@ function paysynk_page_slug($script_path = null) {
 
 require_once __DIR__ . '/paysynk-catalog.php';
 require_once __DIR__ . '/paysynk-preview.php';
+require_once __DIR__ . '/currencies.php';
 

@@ -20,6 +20,7 @@ $base_url = (isset($depth) && $depth > 0) ? str_repeat('../', $depth) : '';
       </nav>
 
       <div class="nav-right">
+        <?php paperboy_currency_switcher(); ?>
         <div class="nav-cart">
           <button type="button" class="nav-cart-btn" id="paysynkCartBtn" data-paysynk-store="<?= htmlspecialchars(PAYSYNK_STORE, ENT_QUOTES, 'UTF-8') ?>" aria-label="Open cart">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
