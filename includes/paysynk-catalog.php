@@ -79,5 +79,5 @@ function paysynk_product_by_slug($slug) {
 }
 
 function paysynk_product_href($slug, $base_url = '') {
-  return $base_url . 'products.php?p=' . rawurlencode($slug) . '#shop-product';
+  return $base_url . 'products.php?p=' . rawurlencode($slug);
 }

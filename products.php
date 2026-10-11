@@ -11,7 +11,7 @@ if ($selected) {
   $page_title = $selected['name'];
   $page_description = $selected['name'] . ' printing from Paperboy JA in Kingston, Jamaica.';
   $page_url = 'products.php?p=' . rawurlencode($selected['slug']);
-  $banner_subtitle = 'order online · PaySynk checkout';
+  $banner_bg = $selected['banner'] ?? $selected['image'] ?? '';
   $paysynk_product = $selected['slug'];
   $paysynk_load_embed = true;
 } else {
@@ -19,6 +19,7 @@ if ($selected) {
   $page_description = 'Shop printing products from Paperboy JA — business cards, banners, flyers, ID cards, and more.';
   $page_url = 'products.php';
   $banner_subtitle = 'choose a product to order';
+  $banner_bg = '';
   $selected_slug = '';
 }
 
@@ -26,7 +27,7 @@ include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/nav.php';
 ?>
 
-  <div class="page-banner"<?php if ($selected && !empty($selected['banner'])): ?> style="background-image:url('<?= htmlspecialchars($selected['banner']) ?>')"<?php endif; ?>>
+  <div class="page-banner<?= !empty($banner_bg) ? ' has-photo' : '' ?>"<?php if (!empty($banner_bg)): ?> style="background-image:url('<?= htmlspecialchars($banner_bg) ?>')"<?php endif; ?>>
     <h1><?= htmlspecialchars($page_title) ?></h1>
     <?php if (!empty($banner_subtitle)): ?>
     <p><?= htmlspecialchars($banner_subtitle) ?></p>
@@ -36,24 +37,15 @@ include __DIR__ . '/includes/nav.php';
   <section class="product-content shop-page">
     <div class="container">
       <?php if ($selected): ?>
-      <?php $product_image = $selected['banner'] ?? $selected['image']; ?>
       <div class="shop-product-panel" id="shop-product">
         <a href="products.php" class="back-link">/ ALL PRODUCTS</a>
-        <div class="shop-product-layout">
-          <div class="shop-product-media">
-            <img src="<?= htmlspecialchars($product_image) ?>" alt="<?= htmlspecialchars($selected['name']) ?>">
-          </div>
-          <div class="shop-product-buy">
-            <h2><?= htmlspecialchars($selected['name']) ?></h2>
-            <div class="shop-grid">
-              <?php paysynk_product_slot($selected['slug']); ?>
-            </div>
-            <div class="quote-cta">
-              <h3>Need a Custom Quote?</h3>
-              <p>Get a same-day quote for your <?= htmlspecialchars(strtolower($selected['name'])) ?> project.</p>
-              <a href="request-a-quote.php?product=<?= urlencode($selected['name']) ?>" class="btn btn-blue">Request a Quote</a>
-            </div>
-          </div>
+        <div class="shop-grid">
+          <?php paysynk_product_slot($selected['slug']); ?>
+        </div>
+        <div class="quote-cta">
+          <h3>Need a Custom Quote?</h3>
+          <p>Get a same-day quote for your <?= htmlspecialchars(strtolower($selected['name'])) ?> project.</p>
+          <a href="request-a-quote.php?product=<?= urlencode($selected['name']) ?>" class="btn btn-blue">Request a Quote</a>
         </div>
       </div>
       <?php endif; ?>
