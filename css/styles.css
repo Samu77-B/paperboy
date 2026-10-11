@@ -4,8 +4,8 @@
 
 /* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; line-height: 1.15; }
-body { margin: 0; font-family: 'Lato', sans-serif; color: #333; background: #fff; -webkit-font-smoothing: antialiased; }
+html { -webkit-text-size-adjust: 100%; line-height: 1.15; overflow-x: clip; }
+body { margin: 0; font-family: 'Lato', sans-serif; color: #333; background: #fff; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
@@ -116,8 +116,8 @@ p { margin-bottom: 16px; }
 .nav-link.highlight { background: var(--blue); color: var(--white); }
 .nav-link.highlight:hover { background: var(--blue-hover); color: var(--white); }
 
-/* Dropdown */
-.nav-dropdown { position: relative; }
+/* Dropdown — static so the mega menu can position against the header */
+.nav-dropdown { position: static; }
 .dropdown-arrow { transition: transform 0.3s ease; }
 .nav-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
 
@@ -126,12 +126,14 @@ p { margin-bottom: 16px; }
   position: absolute;
   top: calc(100% + 8px);
   left: 50%;
+  width: min(1200px, calc(100vw - 32px));
+  min-width: 0;
+  max-width: calc(100vw - 32px);
   transform: translateX(-50%) translateY(-10px);
   background: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08);
   padding: 24px;
-  min-width: 900px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s, visibility 0s linear 0.55s;
@@ -148,8 +150,8 @@ p { margin-bottom: 16px; }
 
 .mega-menu-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px 20px;
 }
 
 .mega-menu-col { display: flex; flex-direction: column; gap: 4px; }
@@ -171,7 +173,7 @@ p { margin-bottom: 16px; }
   font-weight: 500;
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .mega-menu-link:hover {
@@ -827,7 +829,7 @@ p { margin-bottom: 16px; }
 /* --- Category Overview Grid --- */
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 28px;
 }
 
@@ -920,15 +922,9 @@ p { margin-bottom: 16px; }
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-@media (max-width: 767px) {
-  .shop-related .category-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .shop-product-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
   gap: 40px;
   align-items: start;
   margin: 12px 0 8px;
@@ -1011,12 +1007,38 @@ p { margin-bottom: 16px; }
   background-color: #575757;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .shop-product-layout {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
+  .shop-product-media > img {
+    height: 280px;
+  }
+  .shop-related .category-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
   .shop-product-title {
-    font-size: 26px;
+    font-size: 24px;
+  }
+  .shop-product-price {
+    font-size: 22px;
+  }
+  .shop-product-media > img {
+    height: 220px;
+  }
+  .page-banner.has-photo {
+    min-height: 220px;
+    padding: 48px 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .shop-related .category-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1435,8 +1457,7 @@ p { margin-bottom: 16px; }
    ========================================================================== */
 
 @media screen and (max-width: 1200px) {
-  .mega-menu { min-width: 800px; }
-  .mega-menu-grid { grid-template-columns: repeat(4, 1fr); }
+  .mega-menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .mega-menu-col:nth-child(5) { grid-column: 1 / 3; }
 }
 
