@@ -1,6 +1,9 @@
 <?php
 $depth = $depth ?? 1;
 include __DIR__ . '/head.php';
+if (!isset($paysynk_product)) {
+  $paysynk_product = paysynk_page_slug();
+}
 include __DIR__ . '/nav.php';
 ?>
 
@@ -14,54 +17,43 @@ include __DIR__ . '/nav.php';
   </div>
   <?php endif; ?>
 
+  <?php if (!empty($banner_photo)): ?>
+  <div class="page-hero-photo">
+    <img src="<?= htmlspecialchars($base_url . $banner_photo) ?>" alt="<?= htmlspecialchars($page_title) ?>">
+    <div class="page-hero-photo-caption">
+      <h1><?= $page_title ?></h1>
+      <?php if (!empty($banner_subtitle)): ?>
+      <p><?= $banner_subtitle ?></p>
+      <?php endif; ?>
+    </div>
+  </div>
+  <?php else: ?>
   <div class="page-banner" <?php if (!empty($banner_bg)): ?>style="background-image:url('<?= $banner_bg ?>')"<?php endif; ?>>
     <h1><?= $page_title ?></h1>
     <?php if (!empty($banner_subtitle)): ?>
     <p><?= $banner_subtitle ?></p>
     <?php endif; ?>
   </div>
+  <?php endif; ?>
 
   <!-- Product Content -->
   <section class="product-content">
     <div class="container">
       <a href="<?= $base_url . ($category_link ?? '') ?>" class="back-link">/ BACK</a>
 
-      <!-- Ecwid Product Browser (always shown; set $ecwid_product_id on the page to open a specific product) -->
-      <div id="my-store-64309912"></div>
-      <script>
-        window.ec = window.ec || {};
-        window.ec.storefront = window.ec.storefront || {};
-        window.ec.storefront.enable_navigation = true;
-        window.ec.storefront.product_details_layout = "TWO_COLUMNS_SIDEBAR_ON_THE_RIGHT";
-        window.ec.storefront.product_details_gallery_layout = "IMAGE_SINGLE_THUMBNAILS_VERTICAL";
-        window.ec.storefront.product_details_show_product_name = false;
-        window.ec.storefront.product_details_show_breadcrumbs = false;
-        window.ec.storefront.product_details_show_product_sku = false;
-        window.ec.storefront.product_details_show_product_price = true;
-        window.ec.storefront.product_details_show_in_stock_label = false;
-        window.ec.storefront.product_details_show_number_of_items_in_stock = false;
-        window.ec.storefront.product_details_show_qty = true;
-        window.ec.storefront.product_details_show_wholesale_prices = false;
-        window.ec.storefront.product_details_show_product_options = true;
-        window.ec.storefront.product_details_show_product_description = true;
-        window.ec.storefront.product_details_show_share_buttons = false;
-        window.ec.storefront.product_details_show_subtitle = true;
-        <?php
-        $pbParams = '"categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list"';
-        if (!empty($ecwid_product_id)) {
-          $pbParams .= ",\"defaultProductId=" . $ecwid_product_id . "\"";
-        }
-        if (!empty($ecwid_default_slug)) {
-          $pbParams .= ",\"defaultSlug=" . addslashes($ecwid_default_slug) . "\"";
-        }
-        $pbParams .= ',"id=my-store-64309912"';
-        ?>
-        xProductBrowser(<?= $pbParams ?>);
-      </script>
-
       <?php if (!empty($extra_content)): ?>
       <?= $extra_content ?>
       <?php endif; ?>
+
+      <?php
+      if (!empty($paysynk_embed)) {
+        $paysynk_load_embed = true;
+        echo $paysynk_embed;
+      } elseif (!empty($paysynk_product)) {
+        $paysynk_load_embed = true;
+        paysynk_product_slot($paysynk_product);
+      }
+      ?>
 
       <!-- Quote CTA -->
       <div class="quote-cta">

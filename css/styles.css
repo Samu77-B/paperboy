@@ -26,6 +26,9 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; }
   --off-white: #dddddd;
   --white: #ffffff;
   --black: #000000;
+  --paysynk-accent: #00aeec;
+  --paysynk-font: inherit;
+  --paysynk-radius: 8px;
   --gradient: linear-gradient(135deg, #00aeec 0%, #b0159c 100%);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
   --shadow-md: 0 2px 8px rgba(0,0,0,0.1);
@@ -234,16 +237,53 @@ p { margin-bottom: 16px; }
 
 .nav-search-btn:hover { background: var(--blue); color: var(--white); }
 
-.nav-cart { display: flex; align-items: center; min-width: 50px; }
+.nav-cart { display: flex; align-items: center; }
 
-/* Cart Widget */
-.ec-cart-widget {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-height: 30px !important;
+.nav-cart-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: #f3f4f6;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
-.ec-cart-widget * { visibility: visible !important; }
+
+.nav-cart-btn:hover { background: var(--blue); color: var(--white); }
+
+.nav-cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+#paysynk-cart-launcher { display: none !important; }
+
+.paysynk-product-slot { margin: 1.5rem 0 2.5rem; }
+
+.search-overlay-title {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.search-overlay-copy {
+  color: var(--dark-grey);
+  margin-bottom: 20px;
+}
 
 /* Mobile Menu Toggle */
 .mobile-toggle {
@@ -483,9 +523,10 @@ p { margin-bottom: 16px; }
   margin: 0 auto;
 }
 
-.search-bar-wrap #my-search-64309912-inline {
-  transform: scale(1.2);
-  transform-origin: center;
+.search-home-copy {
+  margin: 0;
+  color: var(--dark-grey);
+  font-size: 16px;
 }
 
 /* --- Google Reviews (Testimonials) --- */
@@ -1290,7 +1331,6 @@ p { margin-bottom: 16px; }
   .anniversary-badge img { width: 120px; }
   .page-banner h1 { font-size: 28px; }
   .search-section h2 { font-size: 20px; }
-  .search-bar-wrap #my-search-64309912-inline { transform: scale(1); }
   .artists-hero h1 { font-size: 2rem; }
   .artists-grid { grid-template-columns: 1fr; gap: 20px; }
   .review-buttons { flex-direction: column; align-items: center; }
@@ -1310,7 +1350,6 @@ p { margin-bottom: 16px; }
   .hero-banner h1 { font-size: 22px; }
   .page-banner { padding: 60px 0; }
   .page-banner h1 { font-size: 24px; }
-  .search-bar-wrap #my-search-64309912-inline { transform: scale(0.95); }
   .search-overlay { padding-top: 60px; }
   .search-overlay-box { padding: 24px 16px; width: 95%; }
   .mobile-menu-link { padding: 18px 16px; font-size: 15px; }

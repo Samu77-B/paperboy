@@ -4,6 +4,5 @@ $page_description = 'Professional magazine printing for publications, newsletter
 $current_page = 'services';
 $depth = 1;
 $category_link = 'marketing-products/';
-$ecwid_product_id = '390125056';
 include '../includes/product-page.php';
 ?>

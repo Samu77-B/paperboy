@@ -4,6 +4,5 @@ $page_description = 'Professional certificate printing for awards, achievements,
 $current_page = 'services';
 $depth = 1;
 $category_link = 'event-materials/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

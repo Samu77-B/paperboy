@@ -24,7 +24,7 @@ include __DIR__ . '/../includes/nav.php';
 
       <div class="quote-cta">
         <h3>Need a Custom Quote?</h3>
-        <p>Large runs, special paper, or finishing (binding, laminating)? Get a same-day quote.</p>
+        <p>Large runs, special paper, or finishing (binding, laminating, die-cutting)? Get a same-day quote.</p>
         <a href="<?= $base_url ?>request-a-quote.php?product=<?= urlencode($page_title) ?>" class="btn btn-blue">Request a Quote</a>
       </div>
     </div>

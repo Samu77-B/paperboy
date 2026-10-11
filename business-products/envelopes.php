@@ -4,6 +4,5 @@ $page_description = 'Professional envelope printing services in Kingston, Jamaic
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '417365442';
 include '../includes/product-page.php';
 ?>

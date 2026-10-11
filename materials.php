@@ -25,7 +25,7 @@ include 'includes/nav.php';
       <strong>400 gsm+</strong> – Luxury business cards and specialty items.</p>
 
       <h2 style="margin-top: 40px;">Finishes</h2>
-      <p>We offer matt, silk, and gloss finishes, as well as uncoated stocks. Lamination and other finishing options are available for many products.</p>
+      <p>We offer matt, silk, and gloss finishes, as well as uncoated stocks. Lamination, die-cutting, and other finishing options are available for many products.</p>
     </div>
   </section>
 

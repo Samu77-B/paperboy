@@ -4,6 +4,5 @@ $page_description = 'Custom note pad printing in Kingston, Jamaica. Branded memo
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

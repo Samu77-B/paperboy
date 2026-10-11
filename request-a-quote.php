@@ -79,6 +79,11 @@ include 'includes/nav.php';
                 <option value="Composite ID Cards">Composite ID Cards</option>
                 <option value="Loyalty Cards">Loyalty Cards</option>
               </optgroup>
+              <optgroup label="Accessories">
+                <option value="Die-Cutting">Die-Cutting</option>
+                <option value="Binding">Binding</option>
+                <option value="Lamination">Lamination</option>
+              </optgroup>
               <option value="Other">Other (describe below)</option>
             </select>
           </div>

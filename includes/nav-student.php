@@ -21,7 +21,15 @@ $base_url = (isset($depth) && $depth > 0) ? str_repeat('../', $depth) : '';
 
       <div class="nav-right">
         <div class="nav-cart">
-          <div class="ec-cart-widget"></div>
+          <button type="button" class="nav-cart-btn" id="paysynkCartBtn" data-paysynk-store="<?= htmlspecialchars(PAYSYNK_STORE, ENT_QUOTES, 'UTF-8') ?>" aria-label="Open cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 7h15l-1.5 9h-12L6 7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M6 7L5 4H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+              <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+            </svg>
+            <span class="nav-cart-count" id="paysynkCartCount" hidden>0</span>
+          </button>
         </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -38,9 +46,5 @@ $base_url = (isset($depth) && $depth > 0) ? str_repeat('../', $depth) : '';
       <a href="<?= $base_url ?>index.php" class="mobile-menu-link">Back to Main Site</a>
     </div>
   </header>
-
-  <!-- Ecwid (cart + checkout for Student Club shopping) -->
-  <script data-cfasync="false" src="https://app.ecwid.com/script.js?64309912&data_platform=code&data_date=2021-08-11" charset="utf-8"></script>
-  <script>Ecwid.init();</script>
 
   <script src="<?= $base_url ?>js/nav.js"></script>

@@ -4,6 +4,5 @@ $page_description = 'Adhesive wall poster printing for temporary or semi-permane
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

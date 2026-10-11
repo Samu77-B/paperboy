@@ -4,6 +4,5 @@ $page_description = 'Professional business card printing in Kingston, Jamaica. M
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
 include __DIR__ . '/../includes/product-page.php';
 ?>

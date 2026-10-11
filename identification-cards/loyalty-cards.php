@@ -4,6 +4,5 @@ $page_description = 'Loyalty card printing for retail rewards programs and custo
 $current_page = 'services';
 $depth = 1;
 $category_link = 'identification-cards/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

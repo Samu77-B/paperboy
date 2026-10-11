@@ -4,6 +4,5 @@ $page_description = 'Custom receipt book printing in Kingston, Jamaica. Carbon-c
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

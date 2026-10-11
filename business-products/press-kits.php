@@ -4,6 +4,5 @@ $page_description = 'Press kit and media kit printing in Kingston, Jamaica. Prof
 $current_page = 'services';
 $depth = 1;
 $category_link = 'business-products/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

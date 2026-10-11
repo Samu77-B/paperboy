@@ -4,6 +4,5 @@ $page_description = 'Step and repeat banner printing for red carpet events and p
 $current_page = 'services';
 $depth = 1;
 $category_link = 'signs-banners/';
-$ecwid_product_id = '393275752';
 include '../includes/product-page.php';
 ?>

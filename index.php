@@ -76,9 +76,9 @@ include 'includes/nav.php';
   <!-- Search Section -->
   <section class="search-section">
     <div class="container">
-      <h2>What would you like to search for?</h2>
+      <h2>What would you like to print?</h2>
       <div class="search-bar-wrap">
-        <div id="my-search-64309912-inline" role="search" aria-label="Search products"></div>
+        <p class="search-home-copy">Choose a product from <strong>Services</strong> in the menu, then add it to your cart.</p>
       </div>
     </div>
   </section>

@@ -77,6 +77,7 @@
                 <a href="<?= $base_url ?>accessories/business-card-boxes.php" class="mega-menu-link">Business Card Boxes</a>
                 <a href="<?= $base_url ?>accessories/binding.php" class="mega-menu-link">Binding</a>
                 <a href="<?= $base_url ?>accessories/lamination.php" class="mega-menu-link">Lamination</a>
+                <a href="<?= $base_url ?>accessories/die-cutting.php" class="mega-menu-link">Die-Cutting</a>
                 <a href="<?= $base_url ?>accessories/mailing-tubes.php" class="mega-menu-link">Mailing Tubes</a>
                 <a href="<?= $base_url ?>accessories/lanyards.php" class="mega-menu-link">Lanyards</a>
                 <a href="<?= $base_url ?>accessories/pouches.php" class="mega-menu-link">Pouches</a>
@@ -105,7 +106,15 @@
           </svg>
         </button>
         <div class="nav-cart">
-          <div class="ec-cart-widget"></div>
+          <button type="button" class="nav-cart-btn" id="paysynkCartBtn" data-paysynk-store="<?= htmlspecialchars(PAYSYNK_STORE, ENT_QUOTES, 'UTF-8') ?>" aria-label="Open cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 7h15l-1.5 9h-12L6 7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M6 7L5 4H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+              <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+            </svg>
+            <span class="nav-cart-count" id="paysynkCartCount" hidden>0</span>
+          </button>
         </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -116,7 +125,8 @@
     <div class="search-overlay" id="searchOverlay">
       <div class="search-overlay-box">
         <button class="search-close" id="searchClose" aria-label="Close search">&times;</button>
-        <div id="my-search-64309912"></div>
+        <h2 class="search-overlay-title">Find a product</h2>
+        <p class="search-overlay-copy">Open <strong>Services</strong> in the menu, choose a product, and add it to your cart from that page.</p>
       </div>
     </div>
 
@@ -175,6 +185,7 @@
           <a href="<?= $base_url ?>accessories/business-card-boxes.php" class="mobile-submenu-link">Business Card Boxes</a>
           <a href="<?= $base_url ?>accessories/binding.php" class="mobile-submenu-link">Binding</a>
           <a href="<?= $base_url ?>accessories/lamination.php" class="mobile-submenu-link">Lamination</a>
+          <a href="<?= $base_url ?>accessories/die-cutting.php" class="mobile-submenu-link">Die-Cutting</a>
           <a href="<?= $base_url ?>accessories/mailing-tubes.php" class="mobile-submenu-link">Mailing Tubes</a>
           <a href="<?= $base_url ?>accessories/lanyards.php" class="mobile-submenu-link">Lanyards</a>
           <a href="<?= $base_url ?>accessories/pouches.php" class="mobile-submenu-link">Pouches</a>
@@ -190,6 +201,3 @@
     </div>
   </header>
 
-  <!-- Ecwid -->
-  <script data-cfasync="false" src="https://app.ecwid.com/script.js?64309912&data_platform=code&data_date=2021-08-11" charset="utf-8"></script>
-  <script>Ecwid.init(); xSearch("id=my-search-64309912");</script>

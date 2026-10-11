@@ -4,6 +4,5 @@ $page_description = 'Poster printing for events, promotions, and decorative disp
 $current_page = 'services';
 $depth = 1;
 $category_link = 'photo-printing/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

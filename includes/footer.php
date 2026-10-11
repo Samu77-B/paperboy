@@ -14,7 +14,7 @@
         </div>
         <div>
           <p class="footer-copy">Copyright <span id="copyright-year"></span> Paperboy JA</p>
-          <p class="footer-credit">Website designed, built and maintained by <a href="https://paul-banning.com" target="_blank" rel="noopener">paul-banning.com</a></p>
+          <p class="footer-credit">Website by <a href="https://paradigmstudio.net" target="_blank" rel="noopener">paradigmstudio.net</a> and Ecom by <a href="https://www.paysynk.com" target="_blank" rel="noopener">PaySynk</a></p>
         </div>
         <div class="footer-social">
           <a href="https://www.instagram.com/paperboyja/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -31,6 +31,15 @@
     </div>
   </footer>
 
+  <?php
+  if (!function_exists('paysynk_cart_script')) {
+    require_once __DIR__ . '/paysynk.php';
+  }
+  paysynk_cart_script();
+  if (!empty($paysynk_load_embed) || !empty($paysynk_product) || !empty($paysynk_embed)) {
+    paysynk_embed_script();
+  }
+  ?>
   <script src="<?= $base_url ?>js/nav.js"></script>
   <script src="<?= $base_url ?>js/main.js"></script>
   <?php if (!empty($page_scripts) && is_array($page_scripts)): ?>

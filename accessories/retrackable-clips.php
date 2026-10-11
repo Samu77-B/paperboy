@@ -4,6 +4,5 @@ $page_description = 'Retractable badge clips and reels for ID cards and access p
 $current_page = 'services';
 $depth = 1;
 $category_link = 'accessories/';
-$ecwid_product_id = '';
 include '../includes/product-page.php';
 ?>

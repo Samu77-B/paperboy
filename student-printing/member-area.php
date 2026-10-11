@@ -7,8 +7,6 @@ $depth = 1;
 $student_section = true;
 
 $base_url = '../';
-// If you add a dedicated “Student Club” category in Ecwid, set the slug here for a tailored storefront:
-$ecwid_student_category_slug = ''; // e.g. 'student-club'
 
 include __DIR__ . '/../includes/head.php';
 include __DIR__ . '/../includes/nav-student.php';
@@ -76,31 +74,15 @@ include __DIR__ . '/../includes/nav-student.php';
     <div class="container">
       <h2 class="student-shop-heading">Student Club shop</h2>
       <p class="student-shop-lead">Browse products reserved or priced for Student Club members. At checkout, use your member number or show your card in-store. Need something custom? <a href="<?= $base_url ?>request-a-quote.php?product=Student%20printing">Request a quote</a>.</p>
-      <div id="my-store-student-club-64309912"></div>
-      <script>
-        window.ec = window.ec || {};
-        window.ec.storefront = window.ec.storefront || {};
-        window.ec.storefront.enable_navigation = true;
-        window.ec.storefront.product_details_layout = "TWO_COLUMNS_SIDEBAR_ON_THE_RIGHT";
-        window.ec.storefront.product_details_gallery_layout = "IMAGE_SINGLE_THUMBNAILS_VERTICAL";
-        window.ec.storefront.product_details_show_product_name = true;
-        window.ec.storefront.product_details_show_breadcrumbs = false;
-        window.ec.storefront.product_details_show_product_sku = true;
-        window.ec.storefront.product_details_show_product_price = true;
-        window.ec.storefront.product_details_show_qty = true;
-        window.ec.storefront.product_details_show_product_options = true;
-        window.ec.storefront.product_details_show_product_description = true;
-        window.ec.storefront.product_details_show_share_buttons = false;
-        window.ec.storefront.product_details_show_subtitle = true;
-        <?php
-        $studentPb = '"categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list"';
-        if (!empty($ecwid_student_category_slug)) {
-          $studentPb .= ",\"defaultSlug=" . addslashes($ecwid_student_category_slug) . "\"";
-        }
-        $studentPb .= ',"id=my-store-student-club-64309912"';
-        ?>
-        xProductBrowser(<?= $studentPb ?>);
-      </script>
+      <?php
+      if (!empty($paysynk_embed)) {
+        echo $paysynk_embed;
+      } elseif (!empty($paysynk_product)) {
+        paysynk_product_slot($paysynk_product);
+      } else {
+        echo '<p class="student-shop-lead">Member-priced products will appear here once the PaySynk catalogue is connected. You can still use the cart from any product page.</p>';
+      }
+      ?>
     </div>
   </section>
 

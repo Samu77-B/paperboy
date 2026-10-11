@@ -30,63 +30,8 @@
     return pages * rateFor(size, type);
   }
 
-  function whenEcwidReady(fn) {
-    if (window.Ecwid && Ecwid.Cart && typeof Ecwid.Cart.addProduct === 'function') {
-      fn();
-      return;
-    }
-    if (window.Ecwid && Ecwid.OnAPILoaded && typeof Ecwid.OnAPILoaded.add === 'function') {
-      Ecwid.OnAPILoaded.add(fn);
-      return;
-    }
-    var tries = 0;
-    var timer = setInterval(function () {
-      tries += 1;
-      if (window.Ecwid && Ecwid.Cart && typeof Ecwid.Cart.addProduct === 'function') {
-        clearInterval(timer);
-        fn();
-      } else if (tries > 40) {
-        clearInterval(timer);
-        fn(new Error('Ecwid cart is not available yet. Refresh and try again.'));
-      }
-    }, 250);
-  }
-
-  function addLineToEcwid(line, paidAmount) {
-    return new Promise(function (resolve, reject) {
-      whenEcwidReady(function (err) {
-        if (err) {
-          reject(err);
-          return;
-        }
-        var product = {
-          id: Number(cfg.ecwidProductId),
-          quantity: 1,
-          selectedPrice: String(paidAmount),
-          options: {
-            'Paper size': line.size,
-            'Print type': typeLabel(line.type),
-            Pages: String(line.pages),
-            'Job details':
-              line.size +
-              ' · ' +
-              typeLabel(line.type) +
-              ' · ' +
-              line.pages +
-              (line.pages === 1 ? ' page' : ' pages')
-          },
-          callback: function (success, productInfo, cart, error) {
-            if (success) resolve(cart);
-            else reject(new Error(error || 'Could not add item to cart'));
-          }
-        };
-        try {
-          Ecwid.Cart.addProduct(product);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
+  function cartConfigured() {
+    return Boolean(cfg.paysynkProduct);
   }
 
   function initRoot(root) {
@@ -197,10 +142,10 @@
       }
       totalValue.textContent = money(total);
 
-      var configured = Number(cfg.ecwidProductId) > 0;
+      var configured = cartConfigured();
       addCartBtn.disabled = !configured;
       if (!configured) {
-        setStatus('Cart checkout is not configured yet. Set the Ecwid product ID in print-pricing.js after creating the Name Your Price product.');
+        setStatus('Cart checkout is not configured yet. Set the PaySynk product in print-pricing.js after creating the document printing product.');
       }
     }
 
@@ -236,50 +181,12 @@
 
     addCartBtn.addEventListener('click', function () {
       if (!lines.length) return;
-      if (!(Number(cfg.ecwidProductId) > 0)) {
-        setStatus('Set ecwidProductId in print-pricing.js after creating the Ecwid product.', true);
+      if (!cartConfigured()) {
+        setStatus('Set paysynkProduct in print-pricing.js after creating the PaySynk product.', true);
         return;
       }
 
-      var factor = 1 - discount;
-      var snapshot = lines.map(function (line) {
-        return {
-          line: line,
-          paid: Math.round(line.amount * factor * 100) / 100
-        };
-      });
-
-      addCartBtn.disabled = true;
-      setStatus('Adding to cart…');
-
-      snapshot
-        .reduce(function (chain, item) {
-          return chain.then(function () {
-            return addLineToEcwid(item.line, item.paid);
-          });
-        }, Promise.resolve())
-        .then(function () {
-          setStatus('Added to cart. Open the cart to checkout.');
-          lines = [];
-          renderOrder();
-          if (window.Ecwid && typeof Ecwid.openPage === 'function') {
-            try {
-              Ecwid.openPage('cart');
-            } catch (e) {
-              /* cart widget still updates */
-            }
-          }
-        })
-        .catch(function (err) {
-          setStatus(err && err.message ? err.message : 'Could not add to cart.', true);
-        })
-        .finally(function () {
-          var configured = Number(cfg.ecwidProductId) > 0;
-          addCartBtn.disabled = !configured || !lines.length;
-          if (!configured) {
-            setStatus('Cart checkout is not configured yet. Set the Ecwid product ID in print-pricing.js after creating the Name Your Price product.');
-          }
-        });
+      setStatus('Document printing checkout will be wired once the PaySynk product is in place.', true);
     });
 
     updatePreview();

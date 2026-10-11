@@ -40,6 +40,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  var cartBtn = document.getElementById('paysynkCartBtn');
+  var cartCountEl = document.getElementById('paysynkCartCount');
+  var cartStore = (cartBtn && cartBtn.getAttribute('data-paysynk-store')) || 'paperboy-ja';
+
+  function cartItemCount() {
+    try {
+      var raw = localStorage.getItem('paysynk-cart:' + cartStore);
+      var items = raw ? JSON.parse(raw) : [];
+      var n = 0;
+      for (var i = 0; i < items.length; i++) n += items[i].quantity || 0;
+      return n;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function refreshCartCount() {
+    if (!cartCountEl) return;
+    var n = cartItemCount();
+    if (n > 0) {
+      cartCountEl.hidden = false;
+      cartCountEl.textContent = String(n);
+    } else {
+      cartCountEl.hidden = true;
+    }
+  }
+
+  if (cartBtn) {
+    cartBtn.addEventListener('click', function() {
+      if (window.PaySynkCart && typeof window.PaySynkCart.open === 'function') {
+        window.PaySynkCart.open(cartStore);
+      }
+    });
+  }
+
+  refreshCartCount();
+  window.addEventListener('paysynk:cart-updated', refreshCartCount);
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'paysynk-cart:' + cartStore) refreshCartCount();
+  });
+
   if (dropdown && megaMenu && dropdownTrigger) {
     var menuOpen = false;
 
