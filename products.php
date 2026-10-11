@@ -36,15 +36,24 @@ include __DIR__ . '/includes/nav.php';
   <section class="product-content shop-page">
     <div class="container">
       <?php if ($selected): ?>
+      <?php $product_image = $selected['banner'] ?? $selected['image']; ?>
       <div class="shop-product-panel" id="shop-product">
         <a href="products.php" class="back-link">/ ALL PRODUCTS</a>
-        <div class="shop-grid">
-          <?php paysynk_product_slot($selected['slug']); ?>
-        </div>
-        <div class="quote-cta">
-          <h3>Need a Custom Quote?</h3>
-          <p>Get a same-day quote for your <?= htmlspecialchars(strtolower($selected['name'])) ?> project.</p>
-          <a href="request-a-quote.php?product=<?= urlencode($selected['name']) ?>" class="btn btn-blue">Request a Quote</a>
+        <div class="shop-product-layout">
+          <div class="shop-product-media">
+            <img src="<?= htmlspecialchars($product_image) ?>" alt="<?= htmlspecialchars($selected['name']) ?>">
+          </div>
+          <div class="shop-product-buy">
+            <h2><?= htmlspecialchars($selected['name']) ?></h2>
+            <div class="shop-grid">
+              <?php paysynk_product_slot($selected['slug']); ?>
+            </div>
+            <div class="quote-cta">
+              <h3>Need a Custom Quote?</h3>
+              <p>Get a same-day quote for your <?= htmlspecialchars(strtolower($selected['name'])) ?> project.</p>
+              <a href="request-a-quote.php?product=<?= urlencode($selected['name']) ?>" class="btn btn-blue">Request a Quote</a>
+            </div>
+          </div>
         </div>
       </div>
       <?php endif; ?>

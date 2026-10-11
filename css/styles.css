@@ -907,8 +907,43 @@ p { margin-bottom: 16px; }
   margin-bottom: 48px;
 }
 
+.shop-product-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+  gap: 36px;
+  align-items: start;
+  margin: 12px 0 8px;
+}
+
+.shop-product-media img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: #f4f4f5;
+}
+
+.shop-product-buy h2 {
+  font-size: 28px;
+  margin: 0 0 16px;
+}
+
 .shop-grid .paysynk-product-slot {
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
+  min-height: 0;
+}
+
+.paysynk-product-slot[data-paysynk-missing="1"] {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .shop-product-layout {
+    grid-template-columns: 1fr;
+  }
+  .shop-product-media img {
+    height: 260px;
+  }
 }
 
 /* --- About / Feature Section --- */
