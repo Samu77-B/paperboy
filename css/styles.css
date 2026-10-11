@@ -960,6 +960,19 @@ p { margin-bottom: 16px; }
   font-weight: 800;
   margin: 0 0 6px;
 }
+.shop-product-price.price-multi,
+.price-multi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+.price-multi-main { font-weight: 800; }
+.price-multi-alt {
+  font-size: 0.62em;
+  font-weight: 700;
+  color: var(--dark-grey);
+}
 .shop-currency-note {
   margin: 0 0 20px;
   font-size: 13px;
@@ -2247,6 +2260,7 @@ p { margin-bottom: 16px; }
   font-size: 15px;
   font-weight: 700;
   color: var(--dark);
+  text-align: right;
 }
 .print-order-remove {
   flex-shrink: 0;

@@ -90,7 +90,7 @@
         typeLabel(type) +
         ' @ ' +
         money(unit) +
-        '/page = ' +
+        ' per page = ' +
         money(total);
     }
 

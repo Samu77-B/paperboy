@@ -39,7 +39,7 @@ function paperboy_currency_catalog() {
 function paperboy_currency_defaults() {
   return [
     'base' => 'jmd',
-    'enabled' => ['jmd', 'usd', 'gbp', 'eur', 'cad'],
+    'enabled' => ['jmd', 'usd', 'gbp'],
     'rates' => [
       'jmd' => 1,
       'usd' => 157,
@@ -235,6 +235,10 @@ function paperboy_convert_amount($amount, $from, $to = null) {
   return ($amount * $from_rate) / $to_rate;
 }
 
+function paperboy_display_codes() {
+  return array_keys(paperboy_enabled_currencies());
+}
+
 function paperboy_format_amount($amount, $currency = null) {
   $currency = strtolower((string) ($currency ?: paperboy_selected_currency()));
   $meta = paperboy_currency_meta($currency);
@@ -246,13 +250,45 @@ function paperboy_format_amount($amount, $currency = null) {
   return $meta['symbol'] . number_format($rounded, $decimals);
 }
 
+function paperboy_format_money_parts($amount, $from_currency) {
+  $parts = [];
+  $codes = paperboy_display_codes();
+  if (!$codes) {
+    $codes = ['jmd'];
+  }
+  foreach ($codes as $code) {
+    $parts[] = paperboy_format_amount(paperboy_convert_amount($amount, $from_currency, $code), $code);
+  }
+  return $parts;
+}
+
 function paperboy_format_money_from($amount, $from_currency, $to_currency = null) {
-  $to = $to_currency ?: paperboy_selected_currency();
-  return paperboy_format_amount(paperboy_convert_amount($amount, $from_currency, $to), $to);
+  if ($to_currency !== null) {
+    return paperboy_format_amount(paperboy_convert_amount($amount, $from_currency, $to_currency), $to_currency);
+  }
+  return implode(' / ', paperboy_format_money_parts($amount, $from_currency));
 }
 
 function paperboy_format_minor($minor, $from_currency, $to_currency = null) {
   return paperboy_format_money_from(((int) $minor) / 100, $from_currency, $to_currency);
+}
+
+function paperboy_format_money_html($amount, $from_currency) {
+  $parts = paperboy_format_money_parts($amount, $from_currency);
+  if (count($parts) <= 1) {
+    return htmlspecialchars($parts[0] ?? '', ENT_QUOTES, 'UTF-8');
+  }
+  $html = '<span class="price-multi">';
+  foreach ($parts as $i => $part) {
+    $cls = $i === 0 ? 'price-multi-main' : 'price-multi-alt';
+    $html .= '<span class="' . $cls . '">' . htmlspecialchars($part, ENT_QUOTES, 'UTF-8') . '</span>';
+  }
+  $html .= '</span>';
+  return $html;
+}
+
+function paperboy_format_minor_html($minor, $from_currency) {
+  return paperboy_format_money_html(((int) $minor) / 100, $from_currency);
 }
 
 function paperboy_currency_public_config() {
@@ -271,28 +307,13 @@ function paperboy_currency_public_config() {
   return [
     'base' => $settings['base'],
     'selected' => paperboy_selected_currency(),
+    'display' => paperboy_display_codes(),
     'enabled' => $enabled,
   ];
 }
 
 function paperboy_currency_switcher() {
-  $enabled = paperboy_enabled_currencies();
-  if (count($enabled) < 2) {
-    return;
-  }
-
-  $selected = paperboy_selected_currency();
-  echo '<div class="nav-currency">';
-  echo '<label class="nav-currency-label" for="pbCurrencySelect">Currency</label>';
-  echo '<select id="pbCurrencySelect" class="nav-currency-select" name="currency" aria-label="Choose currency">';
-  foreach ($enabled as $code => $meta) {
-    $is_selected = $code === $selected ? ' selected' : '';
-    echo '<option value="' . htmlspecialchars($code, ENT_QUOTES, 'UTF-8') . '"' . $is_selected . '>';
-    echo htmlspecialchars($meta['code'] . ' · ' . $meta['symbol'], ENT_QUOTES, 'UTF-8');
-    echo '</option>';
-  }
-  echo '</select>';
-  echo '</div>';
+  // Prices show every enabled currency at once, so no customer picker.
 }
 
 function paperboy_admin_settings() {

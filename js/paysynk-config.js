@@ -30,18 +30,19 @@
     return map;
   }
 
-  function money(minor) {
-    if (window.PaperboyCurrency) {
-      return window.PaperboyCurrency.formatMinor(minor, store.currency || 'gbp');
+  function paintPrice(minor) {
+    var from = String(store.currency || 'gbp').toLowerCase();
+    if (window.PaperboyCurrency && window.PaperboyCurrency.formatParts) {
+      window.PaperboyCurrency.renderInto(priceEl, window.PaperboyCurrency.formatParts((Number(minor) || 0) / 100, from));
+      return;
     }
     var amount = Math.round(Number(minor) || 0) / 100;
-    var currency = String(store.currency || 'gbp').toLowerCase();
     var symbols = { gbp: '£', usd: '$', eur: '€', jmd: 'J$' };
-    var symbol = symbols[currency] || currency.toUpperCase() + ' ';
-    if (Math.abs(amount - Math.round(amount)) < 0.001) {
-      return symbol + amount.toLocaleString('en-GB', { maximumFractionDigits: 0 });
-    }
-    return symbol + amount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    var symbol = symbols[from] || from.toUpperCase() + ' ';
+    priceEl.textContent = symbol + amount.toLocaleString('en-GB', {
+      minimumFractionDigits: Math.abs(amount - Math.round(amount)) < 0.001 ? 0 : 2,
+      maximumFractionDigits: 2
+    });
   }
 
   function optionLabel(optionId, valueId) {
@@ -101,13 +102,12 @@
   function paint() {
     var selected = selectedMap();
     var minor = priceMinor(selected);
-    priceEl.textContent = money(minor);
+    paintPrice(minor);
     priceEl.setAttribute('data-money-minor', String(minor));
     priceEl.setAttribute('data-money-from', String(store.currency || 'gbp').toLowerCase());
     if (captionEl) captionEl.textContent = caption(selected);
   }
 
   form.addEventListener('change', paint);
-  document.addEventListener('paperboy:currency', paint);
   paint();
 })();

@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'rates' => $rates,
     ]);
     if ($error === '') {
-      $notice = 'Currency rates saved. Customers will see these rates immediately.';
+      $notice = 'Saved. Ticked currencies now show together on every price.';
     }
   } elseif ($logged_in && ($_POST['action'] ?? '') === 'change-password') {
     $current = (string) ($_POST['current'] ?? '');
@@ -107,7 +107,7 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=17">
+  <link rel="stylesheet" href="../css/styles.css?v=18">
 </head>
 <body class="shop-admin-body">
   <header class="shop-admin-top">
@@ -167,8 +167,8 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
     <?php else: ?>
     <section class="shop-admin-card">
       <h1>Currencies &amp; exchange rates</h1>
-      <p>Turn on the currencies customers can pick, then enter <strong>your</strong> rate — not a live bank feed. Rate means how many Jamaican dollars equal <strong>1 unit</strong> of that currency. Example: if you sell at <strong>1 US$ = 157 J$</strong>, type <strong>157</strong>.</p>
-      <p class="shop-admin-note">Prices on the site convert for display. Checkout still uses your PaySynk store currency.</p>
+      <p>Tick every currency you want on the price <strong>at the same time</strong>. Customers will see all of them together, for example <strong>J$5,125 · US$32.03 · £25</strong>. Enter <strong>your</strong> rate — not a live bank feed. Rate means how many Jamaican dollars equal <strong>1 unit</strong> of that currency. Example: if you sell at <strong>1 US$ = 157 J$</strong>, type <strong>157</strong>.</p>
+      <p class="shop-admin-note">Only tick the currencies you want visible. Checkout still uses your PaySynk store currency.</p>
 
       <form method="post" class="shop-admin-rates" id="currencyRatesForm">
         <input type="hidden" name="csrf" value="<?= $csrf ?>">
@@ -177,7 +177,7 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
           <table class="shop-admin-table">
             <thead>
               <tr>
-                <th>Offer</th>
+                <th>Show on prices</th>
                 <th>Currency</th>
                 <th>Your rate</th>
               </tr>
@@ -193,7 +193,7 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
                 <td>
                   <label class="shop-admin-toggle">
                     <input type="checkbox" name="enabled[]" value="<?= htmlspecialchars($code) ?>"<?= $is_on ? ' checked' : '' ?><?= $is_base ? ' disabled' : '' ?>>
-                    <span><?= $is_base ? 'Always on' : 'Show' ?></span>
+                    <span><?= $is_base ? 'Always on' : 'Show together' ?></span>
                   </label>
                   <?php if ($is_base): ?>
                   <input type="hidden" name="enabled[]" value="jmd">
