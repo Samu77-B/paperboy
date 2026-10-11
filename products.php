@@ -50,8 +50,8 @@ include __DIR__ . '/includes/nav.php';
 
         <?php if ($remote_product): ?>
         <?php
-          $product_image = PAYSYNK_ORIGIN . '/print/' . rawurlencode($remote_product['slug'] ?? $selected['slug']) . '/portrait-normal-85x55.png';
-          $product_image_fallback = paysynk_product_image($remote_product, $selected['image'] ?? '');
+          $product_image = paysynk_product_image($remote_product, $selected['image'] ?? '');
+          $product_image_fallback = $selected['image'] ?? '';
           $start_minor = paysynk_starting_price_minor($remote_product);
           $currency = $remote_store['currency'] ?? 'gbp';
           $shopping_on = !empty($remote_store['paymentsActive']);

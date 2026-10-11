@@ -149,10 +149,6 @@ function paysynk_product_image($product, $fallback = '') {
   if (!empty($product['images'][0]) && is_string($product['images'][0])) {
     return $product['images'][0];
   }
-  $slug = $product['slug'] ?? '';
-  if ($slug !== '') {
-    return PAYSYNK_ORIGIN . '/print/' . rawurlencode($slug) . '/portrait-normal-85x55.png';
-  }
   return $fallback;
 }
 
