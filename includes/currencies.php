@@ -36,9 +36,121 @@ function paperboy_currency_catalog() {
   ];
 }
 
+function paperboy_country_currency_map() {
+  $euro = ['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES', 'AD', 'MC', 'SM', 'VA', 'ME'];
+  $xcd = ['AG', 'DM', 'GD', 'KN', 'LC', 'VC', 'AI', 'MS'];
+  $map = [
+    'JM' => 'jmd',
+    'US' => 'usd', 'PR' => 'usd', 'GU' => 'usd', 'AS' => 'usd', 'MP' => 'usd', 'VI' => 'usd',
+    'GB' => 'gbp', 'IM' => 'gbp', 'JE' => 'gbp', 'GG' => 'gbp',
+    'CA' => 'cad',
+    'AU' => 'aud', 'CX' => 'aud', 'CC' => 'aud', 'NF' => 'aud',
+    'NZ' => 'nzd', 'CK' => 'nzd', 'NU' => 'nzd', 'PN' => 'nzd', 'TK' => 'nzd',
+    'CH' => 'chf', 'LI' => 'chf',
+    'JP' => 'jpy',
+    'CN' => 'cny',
+    'HK' => 'hkd',
+    'SG' => 'sgd',
+    'IN' => 'inr',
+    'MX' => 'mxn',
+    'BR' => 'brl',
+    'ZA' => 'zar',
+    'SE' => 'sek',
+    'NO' => 'nok',
+    'DK' => 'dkk', 'FO' => 'dkk', 'GL' => 'dkk',
+    'PL' => 'pln',
+    'AE' => 'aed',
+    'TW' => 'twd',
+    'KR' => 'krw',
+    'TT' => 'ttd',
+    'BB' => 'bbd',
+    'KY' => 'kyd',
+  ];
+  foreach ($euro as $cc) {
+    $map[$cc] = 'eur';
+  }
+  foreach ($xcd as $cc) {
+    $map[$cc] = 'xcd';
+  }
+  return $map;
+}
+
+function paperboy_language_currency_map() {
+  return [
+    'de' => 'eur', 'fr' => 'eur', 'es' => 'eur', 'it' => 'eur', 'nl' => 'eur',
+    'pt' => 'eur', 'fi' => 'eur', 'el' => 'eur', 'ga' => 'eur', 'sk' => 'eur',
+    'sl' => 'eur', 'et' => 'eur', 'lv' => 'eur', 'lt' => 'eur',
+    'ja' => 'jpy', 'zh' => 'cny', 'hi' => 'inr', 'sv' => 'sek', 'nb' => 'nok',
+    'nn' => 'nok', 'da' => 'dkk', 'pl' => 'pln', 'ko' => 'krw', 'ar' => 'aed',
+  ];
+}
+
+function paperboy_visitor_geo() {
+  static $cached = null;
+  if ($cached !== null) {
+    return $cached;
+  }
+
+  $country = '';
+  $source = 'fallback';
+  $headers = [
+    'HTTP_CF_IPCOUNTRY',
+    'HTTP_CLOUDFRONT_VIEWER_COUNTRY',
+    'HTTP_X_APPENGINE_COUNTRY',
+    'HTTP_X_COUNTRY_CODE',
+    'HTTP_X_VERCEL_IP_COUNTRY',
+  ];
+  foreach ($headers as $header) {
+    $value = strtoupper(trim((string) ($_SERVER[$header] ?? '')));
+    if (preg_match('/^[A-Z]{2}$/', $value) && $value !== 'XX') {
+      $country = $value;
+      $source = 'header';
+      break;
+    }
+  }
+
+  if ($country === '') {
+    $accept = (string) ($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '');
+    if (preg_match('/[a-zA-Z]{2}[-_]([a-zA-Z]{2})/', $accept, $match)) {
+      $country = strtoupper($match[1]);
+      $source = 'language';
+    }
+  }
+
+  $map = paperboy_country_currency_map();
+  $currency = 'jmd';
+  if ($country !== '' && isset($map[$country])) {
+    $currency = $map[$country];
+  } elseif ($source !== 'header') {
+    $accept = strtolower((string) ($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? ''));
+    $lang_map = paperboy_language_currency_map();
+    if (preg_match('/^([a-z]{2})/', $accept, $match) && isset($lang_map[$match[1]])) {
+      $currency = $lang_map[$match[1]];
+      $source = 'language';
+    } else {
+      $country = $country ?: 'JM';
+      $source = 'fallback';
+    }
+  }
+
+  $rates = paperboy_currency_settings()['rates'] ?? [];
+  if (empty($rates[$currency]) || (float) $rates[$currency] <= 0) {
+    $currency = 'jmd';
+  }
+
+  return $cached = [
+    'country' => $country ?: 'JM',
+    'currency' => $currency,
+    'source' => $source,
+  ];
+}
+
 function paperboy_currency_defaults() {
   return [
     'base' => 'jmd',
+    'mode' => 'fixed',
+    'displayCount' => 3,
+    'slots' => ['jmd', 'usd', 'gbp'],
     'enabled' => ['jmd', 'usd', 'gbp'],
     'rates' => [
       'jmd' => 1,
@@ -98,11 +210,20 @@ function paperboy_currency_settings() {
       $defaults['enabled'] = isset($loaded['enabled']) && is_array($loaded['enabled'])
         ? $loaded['enabled']
         : $defaults['enabled'];
+      $defaults['slots'] = isset($loaded['slots']) && is_array($loaded['slots'])
+        ? $loaded['slots']
+        : ($defaults['enabled'] ?? $defaults['slots']);
       $defaults['rates'] = isset($loaded['rates']) && is_array($loaded['rates'])
         ? array_merge($defaults['rates'], $loaded['rates'])
         : $defaults['rates'];
       if (!empty($loaded['base']) && is_string($loaded['base'])) {
         $defaults['base'] = strtolower($loaded['base']);
+      }
+      if (!empty($loaded['mode']) && is_string($loaded['mode'])) {
+        $defaults['mode'] = strtolower($loaded['mode']);
+      }
+      if (isset($loaded['displayCount'])) {
+        $defaults['displayCount'] = (int) $loaded['displayCount'];
       }
     }
   }
@@ -110,18 +231,26 @@ function paperboy_currency_settings() {
   $catalog = paperboy_currency_catalog();
   $defaults['base'] = isset($catalog[$defaults['base']]) ? $defaults['base'] : 'jmd';
   $defaults['rates'][$defaults['base']] = 1;
+  $defaults['mode'] = $defaults['mode'] === 'geo' ? 'geo' : 'fixed';
 
-  $enabled = [];
-  foreach ($defaults['enabled'] as $code) {
+  $slots = [];
+  foreach ($defaults['slots'] as $code) {
     $code = strtolower((string) $code);
-    if (isset($catalog[$code])) {
-      $enabled[] = $code;
+    if (isset($catalog[$code]) && !in_array($code, $slots, true)) {
+      $slots[] = $code;
     }
   }
-  if (!in_array($defaults['base'], $enabled, true)) {
-    array_unshift($enabled, $defaults['base']);
+  if (!$slots) {
+    $slots = ['jmd'];
   }
-  $defaults['enabled'] = array_values(array_unique($enabled));
+  $count = (int) $defaults['displayCount'];
+  if ($count < 1) {
+    $count = count($slots);
+  }
+  $count = min(4, max(1, $count));
+  $defaults['displayCount'] = $count;
+  $defaults['slots'] = array_slice($slots, 0, 4);
+  $defaults['enabled'] = $defaults['slots'];
 
   return $cached = $defaults;
 }
@@ -130,17 +259,25 @@ function paperboy_save_currency_settings(array $settings) {
   $catalog = paperboy_currency_catalog();
   $defaults = paperboy_currency_defaults();
   $base = 'jmd';
+  $mode = (($settings['mode'] ?? 'fixed') === 'geo') ? 'geo' : 'fixed';
 
-  $enabled = [];
-  foreach (($settings['enabled'] ?? []) as $code) {
+  $slots = [];
+  foreach (($settings['slots'] ?? $settings['enabled'] ?? []) as $code) {
     $code = strtolower((string) $code);
-    if (isset($catalog[$code])) {
-      $enabled[] = $code;
+    if (isset($catalog[$code]) && !in_array($code, $slots, true)) {
+      $slots[] = $code;
     }
   }
-  $enabled = array_values(array_unique($enabled));
-  if (!in_array($base, $enabled, true)) {
-    array_unshift($enabled, $base);
+
+  $count = (int) ($settings['displayCount'] ?? count($slots));
+  $count = min(4, max(1, $count));
+  if ($mode === 'fixed') {
+    $slots = array_slice($slots, 0, $count);
+    if (count($slots) < $count) {
+      return 'Choose a currency for each of the ' . $count . ' price slots.';
+    }
+  } elseif (!$slots) {
+    $slots = ['jmd'];
   }
 
   $rates = $defaults['rates'];
@@ -156,9 +293,13 @@ function paperboy_save_currency_settings(array $settings) {
   }
   $rates[$base] = 1;
 
-  foreach ($enabled as $code) {
+  $needed = $mode === 'geo' ? array_keys($catalog) : $slots;
+  foreach ($needed as $code) {
+    if ($mode === 'geo' && empty($rates[$code])) {
+      continue;
+    }
     if (empty($rates[$code]) || $rates[$code] <= 0) {
-      return 'Enter an exchange rate for every enabled currency.';
+      return 'Enter an exchange rate for every currency that can appear on prices.';
     }
   }
 
@@ -169,7 +310,10 @@ function paperboy_save_currency_settings(array $settings) {
 
   $payload = [
     'base' => $base,
-    'enabled' => $enabled,
+    'mode' => $mode,
+    'displayCount' => $count,
+    'slots' => $slots,
+    'enabled' => $slots,
     'rates' => $rates,
   ];
   $export = "<?php\nreturn " . var_export($payload, true) . ";\n";
@@ -236,7 +380,15 @@ function paperboy_convert_amount($amount, $from, $to = null) {
 }
 
 function paperboy_display_codes() {
-  return array_keys(paperboy_enabled_currencies());
+  $settings = paperboy_currency_settings();
+  if (($settings['mode'] ?? 'fixed') === 'geo') {
+    $geo = paperboy_visitor_geo();
+    return [$geo['currency']];
+  }
+
+  $count = min(4, max(1, (int) ($settings['displayCount'] ?? 1)));
+  $slots = $settings['slots'] ?? $settings['enabled'] ?? ['jmd'];
+  return array_slice($slots, 0, $count);
 }
 
 function paperboy_format_amount($amount, $currency = null) {
@@ -294,20 +446,28 @@ function paperboy_format_minor_html($minor, $from_currency) {
 function paperboy_currency_public_config() {
   $settings = paperboy_currency_settings();
   $enabled = [];
-  foreach (paperboy_enabled_currencies() as $code => $meta) {
+  foreach (paperboy_currency_catalog() as $code => $meta) {
+    $rate = (float) ($settings['rates'][$code] ?? 0);
+    if ($rate <= 0) {
+      continue;
+    }
     $enabled[$code] = [
       'code' => $meta['code'],
       'name' => $meta['name'],
       'symbol' => $meta['symbol'],
       'decimals' => (int) $meta['decimals'],
-      'rate' => (float) ($settings['rates'][$code] ?? 0),
+      'rate' => $rate,
     ];
   }
 
   return [
     'base' => $settings['base'],
+    'mode' => $settings['mode'] ?? 'fixed',
     'selected' => paperboy_selected_currency(),
     'display' => paperboy_display_codes(),
+    'geo' => paperboy_visitor_geo(),
+    'countryMap' => paperboy_country_currency_map(),
+    'languageMap' => paperboy_language_currency_map(),
     'enabled' => $enabled,
   ];
 }

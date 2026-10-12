@@ -7,6 +7,34 @@
     ? cfg.display.map(function (code) { return String(code).toLowerCase(); })
     : Object.keys(enabled);
 
+  function detectBrowserCurrency() {
+    var langs = navigator.languages || [navigator.language || ''];
+    var countryMap = cfg.countryMap || {};
+    var languageMap = cfg.languageMap || {};
+    for (var i = 0; i < langs.length; i++) {
+      var parts = String(langs[i] || '').replace('_', '-').split('-');
+      if (parts[1]) {
+        var countryCode = parts[1].toUpperCase();
+        if (countryMap[countryCode] && enabled[countryMap[countryCode]]) {
+          return countryMap[countryCode];
+        }
+      }
+      var lang = String(parts[0] || '').toLowerCase();
+      if (languageMap[lang] && enabled[languageMap[lang]]) {
+        return languageMap[lang];
+      }
+    }
+    return '';
+  }
+
+  if (cfg.mode === 'geo') {
+    var headerCurrency = cfg.geo && cfg.geo.source === 'header' ? String(cfg.geo.currency || '').toLowerCase() : '';
+    var localCurrency = headerCurrency && enabled[headerCurrency]
+      ? headerCurrency
+      : (detectBrowserCurrency() || (cfg.geo && cfg.geo.currency) || cfg.base || 'jmd');
+    display = enabled[localCurrency] ? [localCurrency] : [cfg.base || 'jmd'];
+  }
+
   function convert(amount, from, to) {
     var src = String(from || cfg.base || 'jmd').toLowerCase();
     var dest = String(to || cfg.base || 'jmd').toLowerCase();

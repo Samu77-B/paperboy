@@ -2466,6 +2466,62 @@ p { margin-bottom: 16px; }
   font-weight: 700;
   color: var(--dark);
 }
+.shop-admin-mode {
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin: 20px 0;
+}
+.shop-admin-mode legend {
+  font-weight: 800;
+  padding: 0 6px;
+}
+.shop-admin-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 10px 0;
+  font-weight: 400;
+}
+.shop-admin-choice span { color: var(--dark-grey); }
+.shop-admin-choice strong { display: block; color: var(--dark); margin-bottom: 2px; }
+.shop-admin-count-label { font-weight: 700; margin: 0 0 10px; }
+.shop-admin-count {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.shop-admin-count label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+.shop-admin-count input { position: absolute; opacity: 0; pointer-events: none; }
+.shop-admin-count input:checked + span,
+.shop-admin-count label:has(input:checked) {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+.shop-admin-slots {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+.shop-admin-slot select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
 
 @media (max-width: 767px) {
   .nav-currency-select { max-width: 104px; font-size: 12px; padding: 0 6px; }

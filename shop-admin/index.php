@@ -55,20 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $error = 'That password is not correct.';
   } elseif ($logged_in && ($_POST['action'] ?? '') === 'save-rates') {
-    $enabled = $_POST['enabled'] ?? [];
     $rates = $_POST['rates'] ?? [];
-    if (!is_array($enabled)) {
-      $enabled = [];
-    }
     if (!is_array($rates)) {
       $rates = [];
     }
+    $slots = $_POST['slots'] ?? [];
+    if (!is_array($slots)) {
+      $slots = [];
+    }
     $error = paperboy_save_currency_settings([
-      'enabled' => $enabled,
+      'mode' => (string) ($_POST['mode'] ?? 'fixed'),
+      'displayCount' => (int) ($_POST['displayCount'] ?? 1),
+      'slots' => $slots,
+      'enabled' => $slots,
       'rates' => $rates,
     ]);
     if ($error === '') {
-      $notice = 'Saved. Ticked currencies now show together on every price.';
+      $notice = 'Saved. The store will use this currency display option right away.';
     }
   } elseif ($logged_in && ($_POST['action'] ?? '') === 'change-password') {
     $current = (string) ($_POST['current'] ?? '');
@@ -107,7 +110,7 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=18">
+  <link rel="stylesheet" href="../css/styles.css?v=19">
 </head>
 <body class="shop-admin-body">
   <header class="shop-admin-top">
@@ -167,17 +170,69 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
     <?php else: ?>
     <section class="shop-admin-card">
       <h1>Currencies &amp; exchange rates</h1>
-      <p>Tick every currency you want on the price <strong>at the same time</strong>. Customers will see all of them together, for example <strong>J$5,125 · US$32.03 · £25</strong>. Enter <strong>your</strong> rate — not a live bank feed. Rate means how many Jamaican dollars equal <strong>1 unit</strong> of that currency. Example: if you sell at <strong>1 US$ = 157 J$</strong>, type <strong>157</strong>.</p>
-      <p class="shop-admin-note">Only tick the currencies you want visible. Checkout still uses your PaySynk store currency.</p>
+      <p>Choose how prices appear in the store: a fixed set of <strong>1, 2, 3 or 4 currencies</strong>, or the visitor’s local currency based on where they are viewing from. Then enter <strong>your</strong> rates — not a live bank feed. Rate means how many Jamaican dollars equal <strong>1 unit</strong> of that currency. Example: if you sell at <strong>1 US$ = 157 J$</strong>, type <strong>157</strong>.</p>
+      <p class="shop-admin-note">Checkout still uses your PaySynk store currency.</p>
 
+      <?php
+        $mode = $settings['mode'] ?? 'fixed';
+        $count = (int) ($settings['displayCount'] ?? 3);
+        $slots = $settings['slots'] ?? ['jmd', 'usd', 'gbp'];
+        $slot_labels = [1 => '1st currency', 2 => '2nd currency', 3 => '3rd currency', 4 => '4th currency'];
+      ?>
       <form method="post" class="shop-admin-rates" id="currencyRatesForm">
         <input type="hidden" name="csrf" value="<?= $csrf ?>">
         <input type="hidden" name="action" value="save-rates">
+
+        <fieldset class="shop-admin-mode">
+          <legend>How prices should show</legend>
+          <label class="shop-admin-choice">
+            <input type="radio" name="mode" value="fixed"<?= $mode !== 'geo' ? ' checked' : '' ?>>
+            <span>
+              <strong>Show a fixed set</strong>
+              Pick 1 to 4 currencies. Every customer sees the same ones together.
+            </span>
+          </label>
+          <label class="shop-admin-choice">
+            <input type="radio" name="mode" value="geo"<?= $mode === 'geo' ? ' checked' : '' ?>>
+            <span>
+              <strong>Use the visitor’s local currency</strong>
+              Show the currency for where they are viewing from. If we cannot tell, show Jamaican dollars.
+            </span>
+          </label>
+        </fieldset>
+
+        <div class="shop-admin-fixed" id="fixedCurrencyOptions">
+          <p class="shop-admin-count-label">How many currencies on the price?</p>
+          <div class="shop-admin-count" role="group" aria-label="Number of currencies">
+            <?php for ($n = 1; $n <= 4; $n++): ?>
+            <label>
+              <input type="radio" name="displayCount" value="<?= $n ?>"<?= $count === $n ? ' checked' : '' ?>>
+              <span><?= $n ?></span>
+            </label>
+            <?php endfor; ?>
+          </div>
+          <div class="shop-admin-slots">
+            <?php for ($i = 1; $i <= 4; $i++): ?>
+            <label class="shop-admin-slot" data-slot="<?= $i ?>">
+              <span><?= $slot_labels[$i] ?></span>
+              <select name="slots[]">
+                <?php foreach ($catalog as $code => $meta): ?>
+                <option value="<?= htmlspecialchars($code) ?>"<?= (($slots[$i - 1] ?? '') === $code) ? ' selected' : '' ?>>
+                  <?= htmlspecialchars($meta['code'] . ' — ' . $meta['name']) ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </label>
+            <?php endfor; ?>
+          </div>
+        </div>
+
+        <h2>Your exchange rates</h2>
+        <p class="shop-admin-note">Needed for every currency that can appear — including visitor-local mode.</p>
         <div class="shop-admin-table-wrap">
           <table class="shop-admin-table">
             <thead>
               <tr>
-                <th>Show on prices</th>
                 <th>Currency</th>
                 <th>Your rate</th>
               </tr>
@@ -186,19 +241,9 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
               <?php foreach ($catalog as $code => $meta): ?>
               <?php
                 $is_base = $code === 'jmd';
-                $is_on = in_array($code, $settings['enabled'], true);
                 $rate = $settings['rates'][$code] ?? '';
               ?>
               <tr>
-                <td>
-                  <label class="shop-admin-toggle">
-                    <input type="checkbox" name="enabled[]" value="<?= htmlspecialchars($code) ?>"<?= $is_on ? ' checked' : '' ?><?= $is_base ? ' disabled' : '' ?>>
-                    <span><?= $is_base ? 'Always on' : 'Show together' ?></span>
-                  </label>
-                  <?php if ($is_base): ?>
-                  <input type="hidden" name="enabled[]" value="jmd">
-                  <?php endif; ?>
-                </td>
                 <td>
                   <strong><?= htmlspecialchars($meta['code']) ?></strong>
                   <span><?= htmlspecialchars($meta['name']) ?></span>
@@ -272,8 +317,25 @@ $csrf = htmlspecialchars(shop_admin_csrf_token(), ENT_QUOTES, 'UTF-8');
         preview.textContent = parts.join('  ·  ');
       }
 
+      function syncFixed() {
+        var geo = form.querySelector('input[name="mode"][value="geo"]');
+        var fixedBox = document.getElementById('fixedCurrencyOptions');
+        var countInput = form.querySelector('input[name="displayCount"]:checked');
+        var count = countInput ? Number(countInput.value) : 1;
+        if (fixedBox) fixedBox.hidden = !!(geo && geo.checked);
+        var slots = form.querySelectorAll('.shop-admin-slot');
+        for (var i = 0; i < slots.length; i++) {
+          var on = i < count;
+          slots[i].hidden = !on;
+          var select = slots[i].querySelector('select');
+          if (select) select.disabled = !on;
+        }
+      }
+
       form.addEventListener('input', paint);
+      form.addEventListener('change', syncFixed);
       paint();
+      syncFixed();
     })();
   </script>
   <?php endif; ?>
