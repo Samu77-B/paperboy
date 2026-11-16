@@ -1021,6 +1021,19 @@ p { margin-bottom: 16px; }
   margin: 1.5rem 0 2.5rem;
 }
 
+.shop-catalog-embed {
+  margin: 0 0 2rem;
+  width: 100%;
+}
+
+.shop-catalog-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 780px;
+  border: 0;
+  background: #fff;
+}
+
 .page-banner.has-photo {
   min-height: 380px;
   display: flex;

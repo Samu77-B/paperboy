@@ -57,9 +57,17 @@ include __DIR__ . '/nav.php';
       <?php endif; ?>
 
       <?php
+      if (!function_exists('paysynk_product_iframe')) {
+        require_once __DIR__ . '/paysynk.php';
+      }
       if (!empty($paysynk_embed)) {
-        $paysynk_load_embed = true;
         echo $paysynk_embed;
+      } elseif (!empty($paysynk_iframe)) {
+        paysynk_product_iframe(
+          $paysynk_iframe,
+          $paysynk_iframe_title ?? ($page_title ?? 'Product'),
+          $paysynk_iframe_height ?? 1100
+        );
       } elseif (!empty($paysynk_product)) {
         $paysynk_load_embed = true;
         paysynk_product_slot($paysynk_product);

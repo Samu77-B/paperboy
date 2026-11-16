@@ -9,11 +9,26 @@ function paysynk_shop_url() {
   return PAYSYNK_ORIGIN . '/s/' . rawurlencode(PAYSYNK_STORE);
 }
 
+function paysynk_product_url($product_slug) {
+  return paysynk_shop_url() . '/p/' . rawurlencode($product_slug);
+}
+
+function paysynk_product_iframe($product_slug, $title = 'Product', $min_height = 1100) {
+  if ($product_slug === null || $product_slug === '') {
+    return;
+  }
+  $src = htmlspecialchars(paysynk_product_url($product_slug), ENT_QUOTES, 'UTF-8');
+  $label = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+  $height = (int) $min_height;
+  echo '<div class="shop-catalog-embed">' . "\n";
+  echo '  <iframe src="' . $src . '" style="width:100%;min-height:' . $height . 'px;border:0" title="' . $label . '" loading="lazy"></iframe>' . "\n";
+  echo '</div>' . "\n";
+}
+
 function paysynk_cart_script() {
   $store = htmlspecialchars(PAYSYNK_STORE, ENT_QUOTES, 'UTF-8');
   $merchant = htmlspecialchars(PAYSYNK_MERCHANT_ID, ENT_QUOTES, 'UTF-8');
-  echo '<script src="' . PAYSYNK_ORIGIN . '/cart.js" data-store="' . $store . '" data-merchant-id="' . $merchant . '" data-accent="#00aeec" data-font="inherit" data-radius="inherit"></script>' . "\n";
-  echo '<script>document.querySelectorAll(\'script[src*="cart.js"][data-store]\').forEach(function(s){s.removeAttribute("data-store");});</script>' . "\n";
+  echo '<script src="' . PAYSYNK_ORIGIN . '/cart.js" data-store="' . $store . '" data-merchant-id="' . $merchant . '" async></script>' . "\n";
 }
 
 function paysynk_embed_script() {
