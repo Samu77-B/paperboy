@@ -275,7 +275,6 @@ p { margin-bottom: 16px; }
 
 #paysynk-cart-launcher { display: none !important; }
 
-.paysynk-product-slot { margin: 1.5rem 0 2.5rem; }
 
 .search-overlay-title {
   font-size: 22px;
@@ -1013,8 +1012,13 @@ p { margin-bottom: 16px; }
   cursor: not-allowed;
 }
 
-.shop-grid .paysynk-product-slot {
+.shop-grid [data-paysynk-product] {
   margin: 0 0 1.5rem;
+}
+
+.paysynk-product-slot,
+.shop-page .shop-grid:not(.category-grid) {
+  margin: 1.5rem 0 2.5rem;
 }
 
 .page-banner.has-photo {

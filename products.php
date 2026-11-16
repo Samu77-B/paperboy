@@ -16,10 +16,7 @@ if ($selected) {
   $page_url = 'products.php?p=' . rawurlencode($selected['slug']);
   $banner_bg = $remote_product ? '' : ($selected['banner'] ?? $selected['image'] ?? '');
   $paysynk_product = $selected['slug'];
-  $paysynk_load_embed = empty($remote_product);
-  if ($remote_product) {
-    $page_scripts = ['js/paysynk-config.js'];
-  }
+  $paysynk_load_embed = true;
 } else {
   $page_title = 'Shop';
   $page_description = 'Shop printing products from Paperboy JA — business cards, banners, flyers, ID cards, and more.';
@@ -48,72 +45,12 @@ include __DIR__ . '/includes/nav.php';
       <div class="shop-product-panel" id="shop-product">
         <a href="products.php" class="back-link">/ ALL PRODUCTS</a>
 
-        <?php if ($remote_product): ?>
-        <?php
-          $product_image = paysynk_product_image($remote_product, $selected['image'] ?? '');
-          $product_image_fallback = $selected['image'] ?? '';
-          $start_minor = paysynk_starting_price_minor($remote_product);
-          $currency = $remote_store['currency'] ?? 'gbp';
-          $shopping_on = !empty($remote_store['paymentsActive']);
-        ?>
-        <div class="shop-product-layout" data-paysynk-config>
-          <div class="shop-product-media">
-            <img src="<?= htmlspecialchars($product_image) ?>" alt="<?= htmlspecialchars($remote_product['title'] ?? $selected['name']) ?>"<?php if ($product_image_fallback && $product_image_fallback !== $product_image): ?> onerror="this.onerror=null;this.src='<?= htmlspecialchars($product_image_fallback, ENT_QUOTES) ?>'"<?php endif; ?>>
-            <p class="shop-product-caption" data-ps-caption></p>
-          </div>
-          <div class="shop-product-buy">
-            <h1 class="shop-product-title"><?= htmlspecialchars($remote_product['title'] ?? $selected['name']) ?></h1>
-            <?php if (!empty($remote_product['description'])): ?>
-            <p class="shop-product-desc"><?= htmlspecialchars($remote_product['description']) ?></p>
-            <?php endif; ?>
-            <p class="shop-product-price" data-ps-price data-money-minor="<?= (int) $start_minor ?>" data-money-from="<?= htmlspecialchars($currency) ?>"><?= paperboy_format_minor_html($start_minor, $currency) ?></p>
-            <p class="shop-currency-note">Converted at the shop rate. Checkout stays in <?= htmlspecialchars(strtoupper((string) $currency)) ?>.</p>
-            <form class="shop-config-form" onsubmit="return false;">
-              <?php foreach (($remote_product['options'] ?? []) as $option): ?>
-              <label class="shop-config-field">
-                <span><?= htmlspecialchars($option['name']) ?><?= !empty($option['required']) ? ' *' : '' ?></span>
-                <select data-option-id="<?= htmlspecialchars($option['id']) ?>"<?= !empty($option['required']) ? ' required' : '' ?>>
-                  <?php foreach (($option['values'] ?? []) as $value): ?>
-                  <option value="<?= htmlspecialchars($value['id']) ?>"><?= htmlspecialchars($value['label']) ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </label>
-              <?php endforeach; ?>
-              <?php if (!empty($remote_product['uploadsEnabled'])): ?>
-              <label class="shop-config-field">
-                <span>Artwork</span>
-                <input type="file" accept=".pdf,.ai,.eps,.jpg,.jpeg,.png,.tif,.tiff">
-              </label>
-              <?php endif; ?>
-              <?php if (!empty($remote_product['instructionsEnabled'])): ?>
-              <label class="shop-config-field">
-                <span>Notes</span>
-                <textarea rows="3" placeholder="Tell us about the job"></textarea>
-              </label>
-              <?php endif; ?>
-              <button type="button" class="btn btn-blue shop-config-add"<?= $shopping_on ? '' : ' disabled' ?>>
-                <?= $shopping_on ? 'Add to cart' : 'Coming soon' ?>
-              </button>
-            </form>
-          </div>
-        </div>
-        <script type="application/json" id="paysynk-config-data"><?= json_encode([
-          'store' => [
-            'slug' => $remote_store['slug'] ?? PAYSYNK_STORE,
-            'currency' => $currency,
-            'paymentsActive' => $shopping_on,
-          ],
-          'product' => [
-            'slug' => $remote_product['slug'] ?? $selected['slug'],
-            'title' => $remote_product['title'] ?? $selected['name'],
-            'basePriceMinor' => (int) ($remote_product['basePriceMinor'] ?? 0),
-            'options' => $remote_product['options'] ?? [],
-            'variations' => $remote_product['variations'] ?? [],
-          ],
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
+        <?php paysynk_product_slot($selected['slug']); ?>
 
-        <?php $related = paysynk_related_products($remote_product); ?>
-        <?php if ($related): ?>
+        <?php
+        $related = $remote_product ? paysynk_related_products($remote_product) : [];
+        if ($related):
+        ?>
         <div class="shop-related">
           <h2 class="shop-group-title">You may also like</h2>
           <div class="shop-grid category-grid">
@@ -131,11 +68,6 @@ include __DIR__ . '/includes/nav.php';
             </a>
             <?php endforeach; ?>
           </div>
-        </div>
-        <?php endif; ?>
-        <?php else: ?>
-        <div class="shop-grid">
-          <?php paysynk_product_slot($selected['slug']); ?>
         </div>
         <?php endif; ?>
 

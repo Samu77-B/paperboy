@@ -76,8 +76,10 @@ include __DIR__ . '/../includes/nav-student.php';
       <p class="student-shop-lead">Browse products reserved or priced for Student Club members. At checkout, use your member number or show your card in-store. Need something custom? <a href="<?= $base_url ?>request-a-quote.php?product=Student%20printing">Request a quote</a>.</p>
       <?php
       if (!empty($paysynk_embed)) {
+        $paysynk_load_embed = true;
         echo $paysynk_embed;
       } elseif (!empty($paysynk_product)) {
+        $paysynk_load_embed = true;
         paysynk_product_slot($paysynk_product);
       } else {
         echo '<p class="student-shop-lead">Member-priced products will appear here once the PaySynk catalogue is connected. You can still use the cart from any product page.</p>';

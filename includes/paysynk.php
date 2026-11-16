@@ -17,7 +17,7 @@ function paysynk_cart_script() {
 }
 
 function paysynk_embed_script() {
-  echo '<script src="' . PAYSYNK_ORIGIN . '/embed.js" data-accent="#00aeec" data-font="inherit" data-radius="inherit" defer></script>' . "\n";
+  echo '<script src="' . PAYSYNK_ORIGIN . '/embed.js" defer></script>' . "\n";
 }
 
 function paysynk_product_slot($product_slug) {
@@ -26,7 +26,9 @@ function paysynk_product_slot($product_slug) {
   }
   $store = htmlspecialchars(PAYSYNK_STORE, ENT_QUOTES, 'UTF-8');
   $slug = htmlspecialchars($product_slug, ENT_QUOTES, 'UTF-8');
-  echo '<div class="paysynk-product-slot" data-paysynk-product="' . $slug . '" data-store="' . $store . '"></div>' . "\n";
+  echo '<div class="shop-grid">' . "\n";
+  echo '  <div data-paysynk-product="' . $slug . '" data-store="' . $store . '"></div>' . "\n";
+  echo '</div>' . "\n";
 }
 
 /**
